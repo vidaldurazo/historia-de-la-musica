@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Historia de la música en contexto</title>
+<style>
+:root{--bg:#f6f6f4;--panel:#fff;--card:#fff;--text:#18181b;--muted:#6b7280;--border:#d4d4d8;--accent:#2563eb;--accent-bg:#eff6ff;--c1:#7c3aed;--c2:#0891b2;--c3:#ca8a04;--c4:#dc2626;--c5:#059669}
+@media(prefers-color-scheme:dark){:root{--bg:#101113;--panel:#18191c;--card:#1e2024;--text:#f4f4f5;--muted:#a1a1aa;--border:#3f3f46;--accent:#60a5fa;--accent-bg:#172554;--c1:#a78bfa;--c2:#22d3ee;--c3:#facc15;--c4:#f87171;--c5:#34d399}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{width:min(100%,1600px);margin:auto;padding:18px}.header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:12px}.header h1{font-size:clamp(1.2rem,2vw,1.75rem);margin:0}.header p{color:var(--muted);margin:.3rem 0 0;font-size:.92rem}.controls{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:9px;padding:9px 12px;cursor:pointer}.btn:hover,.btn:focus-visible{background:var(--accent-bg);outline:2px solid var(--accent);outline-offset:2px}.timeline-wrap{position:relative;border:1px solid var(--border);border-radius:14px;background:var(--panel);overflow:hidden}.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}.canvas{position:relative;width:2300px;min-width:2300px;height:900px}.section-title{position:absolute;left:16px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.section-title.top{top:12px}.section-title.bottom{top:530px}.year-line{position:absolute;top:0;bottom:0;width:1px;background:color-mix(in srgb,var(--border) 58%,transparent)}.year-label{position:absolute;top:445px;transform:translateX(-50%);font-size:10px;color:var(--muted)}.axis{position:absolute;left:0;right:0;top:475px;height:54px}.era{position:absolute;top:0;height:54px;border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;font-size:11px;font-weight:750;cursor:pointer;user-select:none}.era:nth-child(5n+1){background:color-mix(in srgb,var(--c1) 17%,var(--card))}.era:nth-child(5n+2){background:color-mix(in srgb,var(--c2) 17%,var(--card))}.era:nth-child(5n+3){background:color-mix(in srgb,var(--c3) 17%,var(--card))}.era:nth-child(5n+4){background:color-mix(in srgb,var(--c4) 14%,var(--card))}.era:nth-child(5n){background:color-mix(in srgb,var(--c5) 16%,var(--card))}.composer{position:absolute;height:23px;border-radius:6px;padding:0 6px;display:flex;align-items:center;font-size:10.5px;white-space:nowrap;cursor:pointer;user-select:none;border:1px solid color-mix(in srgb,var(--c1) 60%,var(--border));background:color-mix(in srgb,var(--c1) 17%,var(--card))}.event-stem{position:absolute;width:1px;background:var(--border);transform:translateX(-50%)}.event-dot{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--c4);border:2px solid var(--card);transform:translateX(-50%)}.event{position:absolute;width:132px;transform:translateX(-50%);font-size:10px;line-height:1.2;text-align:center;padding:5px;border-radius:6px;cursor:pointer;user-select:none}.item:hover,.item:focus-visible,.item.selected{outline:2px solid var(--accent);outline-offset:2px;z-index:20}.event:hover,.event:focus-visible,.event.selected{background:var(--accent-bg)}.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;color:var(--muted);font-size:.78rem}.mobile-hint{display:none;color:var(--muted);font-size:.8rem;margin-top:6px}.popover{position:absolute;z-index:100;width:min(520px,calc(100% - 24px));border:1px solid var(--border);background:var(--card);border-radius:13px;box-shadow:0 12px 34px rgba(0,0,0,.18);padding:14px;display:none}.popover.open{display:block}.pop-main{min-width:0;flex:1}.pop-type{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.pop-title{font-size:1rem;font-weight:800;margin-top:2px;line-height:1.2;padding-right:24px}.pop-dates{font-size:.82rem;color:var(--muted);margin-top:2px}.pop-text{font-size:.88rem;line-height:1.48;margin:10px 0 0}
+.pop-section{margin-top:10px;padding-top:9px;border-top:1px solid var(--border)}
+.pop-section-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:4px}
+.pop-section-text{font-size:.84rem;line-height:1.45;color:var(--text)}
+.pop-section-text strong{font-weight:750}
+.pop-close{position:absolute;right:8px;top:8px;border:0;background:transparent;color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:19px}.pop-close:hover,.pop-close:focus-visible{background:var(--accent-bg);color:var(--text);outline:2px solid var(--accent)}
+
+
+.composer.immortal{
+  background:linear-gradient(90deg,rgba(196,154,52,.34),rgba(196,154,52,.18));
+  border-color:#c49a34;
+  color:var(--text);
+  font-weight:800;
+}
+.composer.immortal::before{
+  content:'★';
+  margin-right:4px;
+  color:#c49a34;
+  font-size:10px;
+}
+.composer.immortal:hover,
+.composer.immortal:focus-visible,
+.composer.immortal.selected{
+  outline-color:#d7ad43;
+}
+.immortal-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-top:7px;
+  padding:4px 7px;
+  border-radius:999px;
+  border:1px solid #c49a34;
+  background:rgba(196,154,52,.14);
+  color:var(--text);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.life-connector{
+  position:absolute;
+  width:1px;
+  background:var(--border);
+  opacity:.18;
+  z-index:1;
+  pointer-events:none;
+  transition:opacity .16s ease,background-color .16s ease,width .16s ease;
+}
+.life-anchor{
+  position:absolute;
+  width:7px;height:7px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:var(--border);
+  opacity:.35;
+  pointer-events:none;
+  z-index:2;
+  transition:opacity .16s ease,background-color .16s ease,transform .16s ease;
+}
+.life-connector.active,
+.event-stem.active{
+  background:var(--accent)!important;
+  opacity:1!important;
+  width:2px!important;
+  z-index:18;
+}
+.life-anchor.active{
+  background:var(--accent)!important;
+  opacity:1!important;
+  transform:translate(-50%,-50%) scale(1.35);
+  z-index:19;
+}
+.event-dot.active{
+  background:var(--accent)!important;
+  transform:translateX(-50%) scale(1.35);
+  z-index:19;
+}
+
+@media(max-width:720px){.app{padding:10px}.controls{width:100%}.btn{flex:1}.mobile-hint{display:block}.timeline-wrap{border-radius:10px}.popover{position:sticky;left:10px!important;top:8px!important;margin:8px 10px 0;width:calc(100% - 20px)}.canvas{height:930px}}
+@media(hover:none){.item:hover{outline:none}}
+</style>
+</head>
+<body>
+<main class="app" id="musicApp">
+  <div class="header"><div><h1>Historia de la música en contexto</h1><p>Compositores, eras musicales y acontecimientos históricos sobre una misma escala temporal.</p><div class="mobile-hint">Toca un elemento para abrir su ficha. Desliza horizontalmente para recorrer los siglos.</div></div><div class="controls"><button class="btn" id="goStart" type="button">1450</button><button class="btn" id="go1800" type="button">1800</button><button class="btn" id="go1900" type="button">1900</button><button class="btn" id="goNow" type="button">Actualidad</button></div></div>
+  <div class="timeline-wrap" id="timelineWrap">
+    <aside class="popover" id="popover" role="dialog" aria-live="polite" aria-label="Información"><button class="pop-close" id="popClose" type="button" aria-label="Cerrar">×</button><div class="pop-main"><div class="pop-type" id="popType"></div><div class="pop-title" id="popTitle"></div><div class="pop-subtitle" id="popSubtitle"></div><div class="pop-dates" id="popDates"></div><div id="immortalBadge"></div></div><p class="pop-text" id="popText"></p><div id="popExtra"></div><a class="wiki-link" id="wikiLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Ver entrada en Wikipedia ↗</a></aside>
+    <div class="scroller" id="scroller" tabindex="0" aria-label="Línea del tiempo interactiva"><div class="canvas" id="canvas"><div class="section-title top">Compositores</div><div class="section-title bottom">Historia mundial</div><div id="grid"></div><div id="composerLayer"></div><div class="axis" id="eraLayer"></div><div id="eventLayer"></div></div></div>
+  </div>
+  <div class="legend"><span>▰ Vida del compositor</span><span>★ Inmortal / transformador</span><span>■ Era musical</span><span>● Suceso histórico</span><span>Las fronteras entre eras son aproximadas.</span><span>Los conectores verticales marcan nacimiento y fallecimiento. Al seleccionar un elemento, sus conectores se resaltan. Las fichas de compositores muestran el nombre completo y un enlace a Wikipedia. Los conectores resaltan nacimiento, fallecimiento y sucesos seleccionados.</span></div>
+</main>
+<script>
+(()=>{
+const START=1450,END=2026,WIDTH=2300,LP=62,RP=30,USABLE=WIDTH-LP-RP,x=y=>LP+((y-START)/(END-START))*USABLE;
+const C=[
+['Josquin des Prez',1450,1521,'Figura capital del Renacimiento. Refinó la polifonía imitativa y la relación expresiva entre texto y música.'],['Giovanni P. da Palestrina',1525,1594,'Modelo de equilibrio y claridad en la polifonía sacra. Su contrapunto fue referencia pedagógica durante siglos.'],['Orlando di Lasso',1532,1594,'Uno de los compositores más versátiles del Renacimiento, activo en repertorio sacro y profano de varias tradiciones europeas.'],['William Byrd',1540,1623,'Figura central de la música inglesa renacentista, maestro de la polifonía vocal y de la escritura para teclado.'],['Tomás Luis de Victoria',1548,1611,'Máximo representante español de la polifonía sacra renacentista, célebre por su intensidad expresiva.'],['Claudio Monteverdi',1567,1643,'Puente entre Renacimiento y Barroco. Fue decisivo para consolidar la ópera y una música más dramática y armónica.'],['Heinrich Schütz',1585,1672,'Figura esencial del primer Barroco alemán; integró innovaciones italianas en la tradición germánica.'],['Jean-Baptiste Lully',1632,1687,'Definió buena parte del estilo operístico y cortesano francés bajo Luis XIV.'],['Arcangelo Corelli',1653,1713,'Fundamental para el desarrollo del concierto grosso, la sonata y el lenguaje violinístico barroco.'],['Henry Purcell',1659,1695,'Principal compositor inglés del Barroco, notable por su escritura vocal, teatral y armónica.'],['François Couperin',1668,1733,'Figura clave de la escuela francesa de clavecín y del refinamiento ornamental barroco.'],['Antonio Vivaldi',1678,1741,'Consolidó el concierto solista y el contraste entre solista y conjunto; influyó incluso en Bach.'],['G. P. Telemann',1681,1767,'Uno de los compositores más prolíficos del Barroco, capaz de sintetizar estilos nacionales europeos.'],['J. S. Bach',1685,1750,'Síntesis monumental del Barroco. Elevó contrapunto, fuga, armonía y formas instrumentales y sacras.'],['G. F. Händel',1685,1759,'Maestro de la ópera y el oratorio; fusionó tradiciones alemana, italiana e inglesa con gran eficacia dramática.'],['Domenico Scarlatti',1685,1757,'Transformó la escritura para teclado mediante cientos de sonatas de gran inventiva técnica y armónica.'],['C. P. E. Bach',1714,1788,'Figura de transición hacia el Clasicismo; su estilo expresivo influyó directamente en Haydn y Mozart.'],['Christoph W. Gluck',1714,1787,'Reformó la ópera buscando mayor unidad dramática, sencillez y subordinación de la ornamentación al teatro.'],['Joseph Haydn',1732,1809,'Fundamental para consolidar la sinfonía, el cuarteto de cuerda y la lógica formal del Clasicismo vienés.'],['Luigi Boccherini',1743,1805,'Compositor y violonchelista decisivo en la música de cámara del Clasicismo.'],['W. A. Mozart',1756,1791,'Llevó el lenguaje clásico a extraordinaria sofisticación en ópera, sinfonía, concierto y música de cámara.'],['L. van Beethoven',1770,1827,'Expandió radicalmente las formas clásicas y abrió la puerta estética al Romanticismo.'],['Niccolò Paganini',1782,1840,'Redefinió el virtuosismo violinístico y la figura romántica del intérprete extraordinario.'],['Carl Maria von Weber',1786,1826,'Figura decisiva en el surgimiento de la ópera romántica alemana.'],['Gioachino Rossini',1792,1868,'Maestro del bel canto y de la ópera cómica italiana, con enorme influencia en el siglo XIX.'],['Franz Schubert',1797,1828,'Transformó el lied y amplió el lenguaje armónico romántico en música vocal, de cámara y sinfónica.'],['Hector Berlioz',1803,1869,'Revolucionó la orquestación y la música programática con una concepción sonora de escala inédita.'],['Felix Mendelssohn',1809,1847,'Figura clave del Romanticismo temprano y de la recuperación moderna de la obra de Bach.'],['Frédéric Chopin',1810,1849,'Redefinió la escritura pianística mediante nuevas texturas, armonías, rubato y gran concentración expresiva.'],['Robert Schumann',1810,1856,'Figura central del Romanticismo pianístico y del lied, con fuerte dimensión literaria y psicológica.'],['Franz Liszt',1811,1886,'Revolucionó la técnica pianística y desarrolló el poema sinfónico como forma narrativa instrumental.'],['Richard Wagner',1813,1883,'Transformó la ópera mediante drama continuo, leitmotivs y una expansión armónica que tensionó la tonalidad.'],['Giuseppe Verdi',1813,1901,'Figura cumbre de la ópera italiana del siglo XIX, combinando potencia dramática, melodía y teatro musical.'],['Anton Bruckner',1824,1896,'Expandió la sinfonía romántica con arquitecturas monumentales, cromatismo y una particular concepción espiritual.'],['Johannes Brahms',1833,1897,'Unió formas clásicas con densidad armónica y expresividad romántica en una síntesis enormemente influyente.'],['Camille Saint-Saëns',1835,1921,'Virtuoso y compositor de gran dominio formal que conectó tradición romántica francesa y modernidad.'],['Georges Bizet',1838,1875,'Su ópera Carmen alteró el realismo dramático y se convirtió en una de las obras más influyentes del repertorio.'],['Modest Mussorgsky',1839,1881,'Desarrolló un lenguaje ruso original, directo y armónicamente audaz, influyente en compositores posteriores.'],['Piotr I. Chaikovski',1840,1893,'Fusionó tradición europea y sensibilidad rusa en sinfonías, ballets, óperas y conciertos de alcance universal.'],['Antonín Dvořák',1841,1904,'Integró tradición sinfónica, melodismo y materiales nacionales checos con impacto internacional.'],['Edvard Grieg',1843,1907,'Figura central del nacionalismo musical noruego y de la miniatura pianística romántica.'],['Nikolái Rimski-Kórsakov',1844,1908,'Maestro de la orquestación y figura decisiva del nacionalismo musical ruso.'],['Giacomo Puccini',1858,1924,'Renovó la ópera italiana con gran continuidad dramática, orquestación refinada y fuerte impacto emocional.'],['Gustav Mahler',1860,1911,'Llevó la sinfonía romántica a dimensiones extremas y anticipó tensiones estéticas del siglo XX.'],['Claude Debussy',1862,1918,'Alteró profundamente armonía, escalas, timbre y forma; el color sonoro pasó a ser parte estructural de la composición.'],['Richard Strauss',1864,1949,'Llevó al límite el poema sinfónico y la orquestación tardorromántica antes de explorar nuevos lenguajes operísticos.'],['Jean Sibelius',1865,1957,'Desarrolló una concepción orgánica de la sinfonía y una voz nacional finlandesa de gran influencia.'],['Erik Satie',1866,1925,'Su economía de medios, ironía y rechazo del exceso romántico anticiparon tendencias modernas y minimalistas.'],['Arnold Schoenberg',1874,1951,'Impulsó la atonalidad y el método dodecafónico, cuestionando la organización tonal dominante durante siglos.'],['Maurice Ravel',1875,1937,'Maestro de la orquestación y del refinamiento formal; integró modernidad armónica con precisión clásica.'],['Manuel de Falla',1876,1946,'Figura central de la música española moderna, integrando tradición popular y lenguaje internacional.'],['Béla Bartók',1881,1945,'Integró etnomusicología, ritmos folclóricos y modernismo en un lenguaje rítmico y armónico personal.'],['Igor Stravinsky',1882,1971,'Revolucionó ritmo y orquestación y atravesó varias etapas estilísticas con enorme influencia en el siglo XX.'],['Anton Webern',1883,1945,'Llevó la escritura atonal y serial a una concentración extrema que influyó en la vanguardia de posguerra.'],['Alban Berg',1885,1935,'Fusionó lenguaje atonal y dodecafónico con una intensa continuidad expresiva y dramática.'],['Sergei Prokofiev',1891,1953,'Desarrolló un modernismo de fuerte perfil rítmico y melódico en ballet, piano, ópera y orquesta.'],['George Gershwin',1898,1937,'Acercó jazz, canción popular estadounidense y formas de concierto con impacto duradero.'],['Francis Poulenc',1899,1963,'Combinó ironía, lirismo, claridad francesa y espiritualidad en una obra muy personal.'],['Aaron Copland',1900,1990,'Construyó un lenguaje orquestal asociado a la identidad musical estadounidense del siglo XX.'],['Dmitri Shostakovich',1906,1975,'Renovó sinfonía y cuarteto combinando modernidad, ironía, tragedia y tensión política soviética.'],['Olivier Messiaen',1908,1992,'Transformó ritmo, armonía y color con influencias del canto de aves, religión y sistemas modales propios.'],['John Cage',1912,1992,'Cuestionó qué entendemos por música al incorporar azar, silencio, ruido y procesos no tradicionales.'],['Benjamin Britten',1913,1976,'Revitalizó la ópera inglesa y desarrolló una voz moderna accesible sin renunciar a complejidad.'],['György Ligeti',1923,2006,'Creó nuevas texturas y masas sonoras mediante micropolyfonía y una imaginación rítmica excepcional.'],['Pierre Boulez',1925,2016,'Figura central del serialismo integral, la vanguardia europea y la dirección musical del siglo XX.'],['Karlheinz Stockhausen',1928,2007,'Pionero de la electrónica, espacialización y serialismo; expandió radicalmente las posibilidades del sonido organizado.'],['Arvo Pärt',1935,null,'Desarrolló el estilo tintinnabuli: música austera y espiritual basada en relaciones simples entre melodía y tríadas.'],['Terry Riley',1935,null,'Pionero del minimalismo estadounidense y de estructuras repetitivas abiertas.'],['Steve Reich',1936,null,'Figura central del minimalismo; exploró repetición, desfase, pulso y procesos graduales.'],['Philip Glass',1937,null,'Popularizó un minimalismo basado en células repetitivas y procesos acumulativos en ópera, cine y grandes formatos.'],['John Adams',1947,null,'Amplió el minimalismo hacia una escritura orquestal y operística más narrativa, armónica y dramática.'],['Kaija Saariaho',1952,2023,'Figura mayor de la música espectral y electrónica, con especial atención al timbre, textura y ópera contemporánea.'],['Thomas Adès',1971,null,'Una de las figuras más destacadas de la composición contemporánea británica, con lenguaje armónico y rítmico ecléctico.'],['Caroline Shaw',1982,null,'Compositora e intérprete que cruza técnicas vocales, tradición clásica y sensibilidades contemporáneas.']];
+const ER=[['Renacimiento',1450,1600,'Etapa marcada por la polifonía vocal y el contrapunto imitativo. Las voces tienden a tener un peso relativamente equilibrado y la música sacra domina buena parte del repertorio culto europeo.'],['Barroco',1600,1750,'Periodo de fuerte contraste, ornamentación y dramatismo. Se consolida la tonalidad, el bajo continuo y una nueva relación entre melodía y acompañamiento, mientras prosperan ópera, concierto, fuga, suite y oratorio.'],['Clasicismo',1750,1820,'Busca claridad, proporción y equilibrio formal. La textura suele ser más transparente que en el Barroco y se consolidan la forma sonata, la sinfonía, el cuarteto de cuerda y el concierto clásico.'],['Romanticismo',1820,1890,'La música se orienta hacia la expresión individual, la emoción y el color. Aumentan el cromatismo, el tamaño de la orquesta, el virtuosismo, el nacionalismo y la relación con literatura, paisaje e ideas extramusicales.'],['Romanticismo tardío',1890,1910,'La expansión romántica llega a un punto extremo en armonía, duración y tamaño orquestal. El cromatismo debilita progresivamente la estabilidad tonal y prepara muchas de las rupturas modernistas.'],['Modernismo',1910,1945,'El siglo XX rompe la idea de un lenguaje musical único. Conviven atonalidad, dodecafonismo, neoclasicismo, ritmos irregulares, nuevas concepciones tímbricas, influencias folclóricas y contacto con músicas populares.'],['Posguerra / Vanguardias',1945,1970,'Tras la Segunda Guerra Mundial, numerosos compositores llevan la experimentación al límite. Aparecen serialismo integral, música electrónica y concreta, procedimientos aleatorios y nuevas maneras de producir y organizar el sonido.'],['Contemporánea',1970,2026,'No existe un único estilo contemporáneo. Conviven minimalismo, espectralismo, neotonalidad, electrónica, posmodernidad y numerosos cruces con jazz, rock, cine, instalaciones y tecnologías digitales.']];
+const EV=[['Caída de Constantinopla',1453,'El Imperio otomano conquista Constantinopla y termina el Imperio bizantino.'],['Imprenta de Gutenberg',1455,'La imprenta de tipos móviles acelera la difusión del conocimiento escrito en Europa.'],['Llegada europea a América',1492,'El viaje de Colón inicia un contacto permanente entre Europa y América, seguido por conquista y colonización.'],['Reforma protestante',1517,'Las tesis asociadas a Lutero impulsan una fractura religiosa y política de Europa occidental.'],['Conquista de Tenochtitlan',1521,'La caída de México-Tenochtitlan marca un punto decisivo en la conquista española de Mesoamérica.'],['Revolución científica',1543,'La obra heliocéntrica de Copérnico simboliza una transformación profunda en el estudio de la naturaleza.'],['Derrota de la Armada Invencible',1588,'El fracaso de la armada española frente a Inglaterra altera el equilibrio naval europeo.'],['Guerra de los Treinta Años',1618,'Conflicto europeo devastador entre 1618 y 1648, ligado a rivalidades religiosas y políticas.'],['Paz de Westfalia',1648,'Los tratados que cierran la Guerra de los Treinta Años redefinen el equilibrio político europeo.'],['Principia de Newton',1687,'Newton formula leyes del movimiento y gravitación que se convierten en fundamento de la física clásica.'],['Ilustración europea',1715,'Durante el siglo XVIII se expanden ideas sobre razón, ciencia, libertad, educación y reforma política.'],['Revolución Industrial',1760,'La mecanización y la producción industrial transforman economía, ciudades, trabajo y vida cotidiana.'],['Independencia de EE. UU.',1776,'Las Trece Colonias declaran su independencia de Gran Bretaña.'],['Revolución Francesa',1789,'La caída del Antiguo Régimen transforma ideas sobre ciudadanía, soberanía y derechos.'],['Revolución Haitiana',1791,'Una rebelión de personas esclavizadas culmina en la independencia de Haití y sacude el sistema colonial atlántico.'],['Guerras napoleónicas',1803,'Entre 1803 y 1815 las guerras napoleónicas reordenan gran parte de Europa.'],['Independencias hispanoamericanas',1810,'Oleadas independentistas transforman el mapa político de América durante las primeras décadas del siglo XIX.'],['Congreso de Viena',1815,'Las potencias europeas reorganizan el continente tras la derrota de Napoleón.'],['Primavera de los Pueblos',1848,'Oleada de revoluciones liberales y nacionalistas sacude Europa.'],['Origen de las especies',1859,'Darwin publica la teoría de la evolución por selección natural.'],['Unificación de Italia',1861,'Se constituye el Reino de Italia tras décadas de movimientos nacionalistas y conflictos.'],['Segunda Revolución Industrial',1870,'Electricidad, acero, química, petróleo y nuevas comunicaciones aceleran la industrialización global.'],['Unificación alemana',1871,'La proclamación del Imperio alemán altera profundamente el equilibrio de poder europeo.'],['Invención del cine',1895,'Las primeras proyecciones cinematográficas públicas abren un nuevo medio artístico y de masas.'],['Primera Guerra Mundial',1914,'La guerra de 1914–1918 provoca destrucción masiva, caída de imperios y ruptura cultural.'],['Revolución Rusa',1917,'La caída del zarismo y el ascenso bolchevique conducen a la formación de la Unión Soviética.'],['Pandemia de influenza',1918,'La pandemia de influenza de 1918–1920 causa decenas de millones de muertes en el mundo.'],['Gran Depresión',1929,'El colapso financiero desencadena una profunda crisis económica mundial durante los años treinta.'],['Ascenso del nazismo',1933,'Hitler llega al poder en Alemania y el régimen nazi consolida rápidamente una dictadura totalitaria.'],['Segunda Guerra Mundial',1939,'El conflicto de 1939–1945 causa destrucción global, genocidio y una reorganización del orden internacional.'],['Holocausto',1941,'El régimen nazi ejecuta el asesinato sistemático de seis millones de judíos y millones de otras víctimas.'],['Era nuclear',1945,'Las bombas atómicas sobre Hiroshima y Nagasaki inauguran la era de las armas nucleares.'],['Fundación de la ONU',1945,'Se crea Naciones Unidas con el objetivo de mantener la paz y fomentar cooperación internacional.'],['Inicio de la Guerra Fría',1947,'Estados Unidos y la Unión Soviética consolidan una rivalidad geopolítica, militar e ideológica global.'],['Revolución china',1949,'La victoria comunista conduce a la creación de la República Popular China.'],['Descolonización',1950,'Tras la Segunda Guerra Mundial, numerosas colonias de Asia y África obtienen su independencia.'],['Sputnik',1957,'La URSS lanza el primer satélite artificial y abre la era espacial.'],['Crisis de los misiles de Cuba',1962,'Estados Unidos y la URSS se aproximan peligrosamente a una guerra nuclear.'],['Llegada a la Luna',1969,'Apollo 11 lleva seres humanos a la superficie lunar.'],['Internet moderno',1983,'La adopción de TCP/IP establece la base técnica de la Internet moderna.'],['Caída del Muro de Berlín',1989,'La apertura del muro simboliza el colapso de los regímenes comunistas de Europa oriental.'],['Disolución de la URSS',1991,'La Unión Soviética deja de existir y termina formalmente una etapa central de la Guerra Fría.'],['World Wide Web pública',1991,'La Web comienza a expandirse como sistema abierto de documentos interconectados sobre Internet.'],['Atentados del 11-S',2001,'Los ataques contra Estados Unidos transforman la política internacional y de seguridad.'],['Crisis financiera global',2008,'El colapso financiero iniciado en Estados Unidos desencadena una severa recesión mundial.'],['Primavera Árabe',2010,'Oleadas de protestas y levantamientos políticos se extienden por varios países árabes.'],['Acuerdo de París',2015,'Casi todos los países adoptan un marco global para limitar el calentamiento climático.'],['Pandemia de COVID-19',2020,'SARS-CoV-2 provoca una crisis sanitaria global y fuertes alteraciones económicas y sociales.'],['Invasión rusa de Ucrania',2022,'Rusia inicia una invasión a gran escala de Ucrania, alterando la seguridad y política internacional.'],['IA generativa masiva',2022,'Los sistemas generativos de gran escala pasan rápidamente al uso público y transforman debates sobre trabajo, creatividad y tecnología.']];
+function pack(items,gap=4,max=14){const lanes=[];return items.map(data=>{const a=data[1],b=data[2]??END;let lane=lanes.findIndex(e=>a>=e+gap);if(lane<0){if(lanes.length<max){lane=lanes.length;lanes.push(b)}else{lane=lanes.reduce((best,v,i)=>v<lanes[best]?i:best,0);lanes[lane]=b}}else lanes[lane]=b;return{data,lane}})}
+const grid=document.getElementById('grid');for(let y=1450;y<=2025;y+=25){const l=document.createElement('div');l.className='year-line';l.style.left=x(y)+'px';l.style.opacity=y%50===0?'1':'.35';grid.appendChild(l);if(y%50===0){const t=document.createElement('div');t.className='year-label';t.style.left=x(y)+'px';t.textContent=y;grid.appendChild(t)}}
+const pop=document.getElementById('popover'),wrap=document.getElementById('timelineWrap');let selected=null;const links=new WeakMap();let activeLinks=[];const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const fullNames={
+'Josquin des Prez':'Josquin des Prez','Giovanni P. da Palestrina':'Giovanni Pierluigi da Palestrina','Orlando di Lasso':'Orlando di Lasso','William Byrd':'William Byrd','Tomás Luis de Victoria':'Tomás Luis de Victoria','Claudio Monteverdi':'Claudio Giovanni Antonio Monteverdi','Heinrich Schütz':'Heinrich Schütz','Jean-Baptiste Lully':'Jean-Baptiste Lully','Arcangelo Corelli':'Arcangelo Corelli','Henry Purcell':'Henry Purcell','François Couperin':'François Couperin','Antonio Vivaldi':'Antonio Lucio Vivaldi','G. P. Telemann':'Georg Philipp Telemann','J. S. Bach':'Johann Sebastian Bach','G. F. Händel':'Georg Friedrich Händel','Domenico Scarlatti':'Giuseppe Domenico Scarlatti','C. P. E. Bach':'Carl Philipp Emanuel Bach','Christoph W. Gluck':'Christoph Willibald Gluck','Joseph Haydn':'Franz Joseph Haydn','Luigi Boccherini':'Luigi Rodolfo Boccherini','W. A. Mozart':'Wolfgang Amadeus Mozart','L. van Beethoven':'Ludwig van Beethoven','Niccolò Paganini':'Niccolò Paganini','Carl Maria von Weber':'Carl Maria Friedrich Ernst von Weber','Gioachino Rossini':'Gioachino Antonio Rossini','Franz Schubert':'Franz Peter Schubert','Hector Berlioz':'Louis-Hector Berlioz','Felix Mendelssohn':'Jakob Ludwig Felix Mendelssohn Bartholdy','Frédéric Chopin':'Frédéric François Chopin','Robert Schumann':'Robert Alexander Schumann','Franz Liszt':'Franz Liszt','Richard Wagner':'Wilhelm Richard Wagner','Giuseppe Verdi':'Giuseppe Fortunino Francesco Verdi','Anton Bruckner':'Josef Anton Bruckner','Johannes Brahms':'Johannes Brahms','Camille Saint-Saëns':'Charles-Camille Saint-Saëns','Georges Bizet':'Alexandre César Léopold Bizet','Modest Mussorgsky':'Modest Petrovich Mussorgsky','Piotr I. Chaikovski':'Piotr Ilich Chaikovski','Antonín Dvořák':'Antonín Leopold Dvořák','Edvard Grieg':'Edvard Hagerup Grieg','Nikolái Rimski-Kórsakov':'Nikolái Andréyevich Rimski-Kórsakov','Giacomo Puccini':'Giacomo Antonio Domenico Michele Secondo Maria Puccini','Gustav Mahler':'Gustav Mahler','Claude Debussy':'Achille-Claude Debussy','Richard Strauss':'Richard Georg Strauss','Jean Sibelius':'Johan Julius Christian Sibelius','Erik Satie':'Éric Alfred Leslie Satie','Arnold Schoenberg':'Arnold Franz Walter Schönberg','Maurice Ravel':'Joseph Maurice Ravel','Manuel de Falla':'Manuel de Falla y Matheu','Béla Bartók':'Béla Viktor János Bartók','Igor Stravinsky':'Ígor Fiódorovich Stravinski','Anton Webern':'Anton Friedrich Wilhelm von Webern','Alban Berg':'Alban Maria Johannes Berg','Sergei Prokofiev':'Serguéi Serguéyevich Prokófiev','George Gershwin':'Jacob Gershwine','Francis Poulenc':'Francis Jean Marcel Poulenc','Aaron Copland':'Aaron Copland','Dmitri Shostakovich':'Dmitri Dmitriyevich Shostakovich','Olivier Messiaen':'Olivier Eugène Prosper Charles Messiaen','Benjamin Britten':'Edward Benjamin Britten','John Cage':'John Milton Cage Jr.','György Ligeti':'György Sándor Ligeti','Pierre Boulez':'Pierre Louis Joseph Boulez','Karlheinz Stockhausen':'Karlheinz Stockhausen','Arvo Pärt':'Arvo Pärt','Terry Riley':'Terrence Mitchell Riley','Steve Reich':'Stephen Michael Reich','Philip Glass':'Philip Morris Glass','John Adams':'John Coolidge Adams','Kaija Saariaho':'Kaija Anneli Saariaho','Thomas Adès':'Thomas Joseph Edmund Adès','Caroline Shaw':'Caroline Adelaide Shaw'
+};
+const wikiTitles={
+'Giovanni P. da Palestrina':'Giovanni_Pierluigi_da_Palestrina','G. P. Telemann':'Georg_Philipp_Telemann','J. S. Bach':'Johann_Sebastian_Bach','G. F. Händel':'Georg_Friedrich_Händel','C. P. E. Bach':'Carl_Philipp_Emanuel_Bach','Christoph W. Gluck':'Christoph_Willibald_Gluck','W. A. Mozart':'Wolfgang_Amadeus_Mozart','L. van Beethoven':'Ludwig_van_Beethoven','Piotr I. Chaikovski':'Piotr_Ilich_Chaikovski','Nikolái Rimski-Kórsakov':'Nikolái_Rimski-Kórsakov','Igor Stravinsky':'Ígor_Stravinski','Sergei Prokofiev':'Serguéi_Prokófiev','Dmitri Shostakovich':'Dmitri_Shostakóvich'
+};
+function wikipediaUrl(shortName){
+  const title=wikiTitles[shortName]||(fullNames[shortName]||shortName).replace(/\s+/g,'_');
+  return 'https://es.wikipedia.org/wiki/'+title.split('/').map(p=>encodeURIComponent(p)).join('/');
+}
+function clearActiveLinks(){
+  activeLinks.forEach(el=>el?.classList?.remove('active'));
+  activeLinks=[];
+}
+
+
+
+
+const IMMORTALS=new Set([
+  'Josquin des Prez',
+  'Claudio Monteverdi',
+  'Antonio Vivaldi',
+  'J. S. Bach',
+  'G. F. Händel',
+  'Joseph Haydn',
+  'W. A. Mozart',
+  'L. van Beethoven',
+  'Franz Schubert',
+  'Frédéric Chopin',
+  'Franz Liszt',
+  'Richard Wagner',
+  'Giuseppe Verdi',
+  'Johannes Brahms',
+  'Piotr I. Chaikovski',
+  'Claude Debussy',
+  'Arnold Schoenberg',
+  'Béla Bartók',
+  'Igor Stravinsky',
+  'Dmitri Shostakovich',
+  'John Cage',
+  'Steve Reich'
+]);
+
+const composerDetails={
+'Josquin des Prez':{
+bio:'Compositor franco-flamenco activo en cortes e instituciones eclesiásticas de Francia e Italia. Su reputación fue enorme ya en vida y, tras su muerte, su nombre llegó a utilizarse incluso para atribuirle obras ajenas con fines editoriales.',
+works:'Missa Pange lingua, Ave Maria… virgo serena, Miserere mei Deus.',
+style:'Llevó la polifonía imitativa a un grado excepcional de claridad y expresividad. Trabajó con motivos breves que pasan de una voz a otra y cuidó especialmente la relación entre música y texto.',
+legacy:'Fue uno de los primeros compositores europeos cuya personalidad artística trascendió claramente su función cortesana o religiosa. Su escritura sirvió de modelo para buena parte del siglo XVI.'
+},
+'Giovanni P. da Palestrina':{
+bio:'Compositor italiano ligado a Roma y a importantes instituciones religiosas, entre ellas la Capilla Sixtina y San Pedro. Su carrera quedó estrechamente asociada a la música litúrgica católica de la Contrarreforma.',
+works:'Missa Papae Marcelli, Sicut cervus, Stabat Mater.',
+style:'Su contrapunto privilegia líneas vocales suaves, consonancia, independencia de las voces y gran inteligibilidad del texto. Evita brusquedades y crea una sensación de equilibrio casi arquitectónico.',
+legacy:'La llamada “escritura palestriniana” se convirtió siglos después en modelo académico para enseñar contrapunto. Su nombre quedó asociado al ideal de polifonía sacra renacentista.'
+},
+'Orlando di Lasso':{
+bio:'Nacido en los Países Bajos borgoñones, trabajó en Italia y terminó al servicio de la corte bávara en Múnich. Fue uno de los compositores más cosmopolitas y prolíficos del siglo XVI.',
+works:'Prophetiae Sibyllarum, Lagrime di San Pietro, numerosos motetes, madrigales y chansons.',
+style:'Dominó prácticamente todos los géneros vocales de su tiempo y combinó técnicas franco-flamencas con estilos italianos, franceses y alemanes. Su armonía puede ser sorprendentemente cromática.',
+legacy:'Representa la madurez internacional del Renacimiento: una música capaz de circular entre lenguas, cortes y tradiciones nacionales sin perder sofisticación.'
+},
+'William Byrd':{
+bio:'Compositor inglés que trabajó bajo Isabel I y Jacobo I. A pesar de ser católico en una Inglaterra protestante, mantuvo una destacada carrera cortesana y produjo música para ambos contextos religiosos.',
+works:'Mass for Four Voices, Ave verum corpus, The Bells.',
+style:'Su música combina contrapunto refinado, intensa expresividad armónica y una escritura para teclado extraordinariamente avanzada para su época.',
+legacy:'Fue decisivo para la escuela inglesa de música vocal y de teclado, e influyó en el desarrollo posterior del virginalismo y la tradición coral inglesa.'
+},
+'Tomás Luis de Victoria':{
+bio:'Sacerdote y compositor español formado en Roma, donde conoció de cerca la tradición polifónica italiana. Regresó después a Madrid y trabajó en el entorno del convento de las Descalzas Reales.',
+works:'Officium Defunctorum, O magnum mysterium, Ave Maria.',
+style:'Su música es más concentrada y dramática que la de muchos contemporáneos. Usa disonancias, contrastes y colores armónicos para intensificar el sentido espiritual del texto.',
+legacy:'Es considerado una de las máximas figuras de la polifonía sacra española y uno de los grandes compositores religiosos del Renacimiento tardío.'
+},
+'Claudio Monteverdi':{
+bio:'Trabajó primero en Mantua y después como maestro de capilla de San Marcos en Venecia. Vivió justamente en el momento en que el lenguaje renacentista estaba dando paso al Barroco.',
+works:'L’Orfeo, Il ritorno d’Ulisse in patria, L’incoronazione di Poppea, Vespro della Beata Vergine.',
+style:'Defendió una “segunda práctica” en la que la armonía y la disonancia podían subordinarse a la expresión del texto. Favoreció el dramatismo, la declamación y el contraste.',
+legacy:'Fue crucial en la consolidación de la ópera y en el paso desde la polifonía renacentista hacia una música centrada en melodía, bajo y función dramática.'
+},
+'Heinrich Schütz':{
+bio:'Compositor alemán formado en Venecia con Giovanni Gabrieli. Desarrolló su carrera principalmente en Dresde, en medio de las dificultades de la Guerra de los Treinta Años.',
+works:'Psalmen Davids, Musikalische Exequien, Historia der Geburt Jesu Christi.',
+style:'Fusionó el lenguaje policoral y dramático italiano con la tradición protestante alemana. Su tratamiento del texto fue extraordinariamente expresivo.',
+legacy:'Es uno de los grandes precursores de Bach y de la tradición musical luterana alemana.'
+},
+'Jean-Baptiste Lully':{
+bio:'Nacido en Florencia, desarrolló casi toda su carrera en Francia y se convirtió en músico favorito de Luis XIV. Dominó la vida operística de la corte francesa durante décadas.',
+works:'Atys, Armide, Alceste.',
+style:'Desarrolló la tragédie lyrique, con declamación francesa, ballet, coros y una obertura característica de ritmos punteados.',
+legacy:'Fijó un modelo francés de ópera y música cortesana que influyó profundamente en Europa.'
+},
+'Arcangelo Corelli':{
+bio:'Violinista y compositor italiano establecido en Roma. Su prestigio como intérprete y maestro ayudó a establecer estándares técnicos para la cuerda.',
+works:'Concerti grossi Op. 6, Sonate da chiesa Op. 3, Sonate per violino Op. 5.',
+style:'Su música destaca por equilibrio formal, claridad armónica y diálogo entre grupos instrumentales.',
+legacy:'Fue decisivo en el desarrollo de la sonata barroca, el concerto grosso y la técnica violinística europea.'
+},
+'Henry Purcell':{
+bio:'Compositor inglés al servicio de la corte y de la Abadía de Westminster. Murió joven, pero dejó una producción muy amplia de música teatral, religiosa e instrumental.',
+works:'Dido and Aeneas, King Arthur, Music for the Funeral of Queen Mary.',
+style:'Combina tradición inglesa con influencias francesas e italianas, especialmente en su tratamiento armónico y dramático del texto.',
+legacy:'Es considerado el principal compositor inglés del Barroco y una referencia esencial para la música vocal británica.'
+},
+'François Couperin':{
+bio:'Miembro de una importante familia de músicos franceses y organista de la corte de Luis XIV. Fue especialmente célebre como clavecinista.',
+works:'Pièces de clavecin, Les Nations, Concerts royaux.',
+style:'Su música utiliza ornamentación refinada, miniaturas de carácter y una delicada sensibilidad tímbrica.',
+legacy:'Representa uno de los puntos culminantes del estilo francés de teclado y defendió la combinación de gustos francés e italiano.'
+},
+'Antonio Vivaldi':{
+bio:'Sacerdote, violinista y compositor veneciano. Trabajó durante años con el Ospedale della Pietà, institución que formaba musicalmente a niñas huérfanas o abandonadas.',
+works:'Le quattro stagioni, L’estro armonico, Gloria RV 589.',
+style:'Usó ritornellos, contrastes fuertes, secuencias armónicas y escritura violinística virtuosa. Su sentido rítmico es directo y energético.',
+legacy:'Ayudó a fijar la forma del concierto solista barroco. Bach estudió y transcribió varias de sus obras.'
+},
+'G. P. Telemann':{
+bio:'Compositor alemán de enorme productividad, activo en Leipzig, Frankfurt y Hamburgo. Fue más famoso que Bach en gran parte de su vida.',
+works:'Tafelmusik, Paris Quartets, Der Tag des Gerichts.',
+style:'Asimiló con facilidad estilos franceses, italianos, alemanes y polacos, con gran inventiva melódica.',
+legacy:'Representa el cosmopolitismo barroco y fue figura clave en la transición hacia un lenguaje más ligero y galante.'
+},
+'J. S. Bach':{
+bio:'Organista, maestro de capilla y compositor alemán. Trabajó en Weimar, Köthen y finalmente Leipzig, donde dirigió música para las principales iglesias de la ciudad.',
+works:'Pasión según San Mateo, El clave bien temperado, Conciertos de Brandeburgo, Misa en si menor, Variaciones Goldberg.',
+style:'Su música combina contrapunto extremadamente elaborado, arquitectura formal, simbolismo, dominio armónico y una extraordinaria capacidad para transformar motivos.',
+legacy:'Se convirtió en referencia central para la composición occidental. Mozart, Beethoven, Mendelssohn, Brahms, Schoenberg y muchos otros estudiaron profundamente su obra.'
+},
+'G. F. Händel':{
+bio:'Nacido en Alemania, trabajó en Italia y acabó desarrollando gran parte de su carrera en Londres. Fue empresario teatral además de compositor.',
+works:'Messiah, Water Music, Music for the Royal Fireworks, Giulio Cesare.',
+style:'Combina melodía italiana, contrapunto alemán, solemnidad inglesa y gran sentido teatral.',
+legacy:'Elevó el oratorio inglés a una forma monumental y creó algunas de las obras corales más duraderas del repertorio occidental.'
+},
+'Domenico Scarlatti':{
+bio:'Hijo del compositor Alessandro Scarlatti. Trabajó en Italia, Portugal y España, asociado durante años a la corte de María Bárbara de Braganza.',
+works:'Más de 500 sonatas para teclado, entre ellas K. 141, K. 380 y K. 27.',
+style:'Exploró cruces de manos, repeticiones rápidas, grandes saltos, disonancias y recursos inspirados en la música ibérica.',
+legacy:'Transformó las posibilidades técnicas y sonoras del teclado y anticipó rasgos que después serían habituales en el piano.'
+},
+'C. P. E. Bach':{
+bio:'Segundo hijo superviviente de Johann Sebastian Bach. Trabajó en la corte de Federico el Grande y posteriormente en Hamburgo.',
+works:'Magnificat, conciertos para teclado, sonatas “prusianas” y “württemberguesas”.',
+style:'Figura central del empfindsamer Stil, caracterizado por contrastes súbitos, sensibilidad emocional y frases irregulares.',
+legacy:'Fue una influencia directa sobre Haydn, Mozart y Beethoven, y ayudó a desmontar la retórica barroca antes del Clasicismo.'
+},
+'Christoph W. Gluck':{
+bio:'Compositor de ópera nacido en Bohemia y activo en Viena y París. Reaccionó contra los excesos virtuosísticos de la ópera seria.',
+works:'Orfeo ed Euridice, Alceste, Iphigénie en Tauride.',
+style:'Buscó una música subordinada al drama, con arias menos ornamentadas, mayor continuidad escénica y uso expresivo de coro y orquesta.',
+legacy:'Sus reformas cambiaron profundamente la concepción de la ópera y prepararon el camino para Mozart y otros compositores dramáticos.'
+},
+'Joseph Haydn':{
+bio:'Pasó gran parte de su carrera al servicio de la familia Esterházy, donde dispuso de una orquesta estable para experimentar con formas y sonoridades.',
+works:'Sinfonías Londres, La Creación, Las estaciones, cuartetos Op. 76.',
+style:'Su escritura combina claridad formal, humor, desarrollo motívico y sofisticación estructural.',
+legacy:'Fue decisivo para la consolidación de la sinfonía y el cuarteto de cuerda y ejerció una fuerte influencia sobre Mozart y Beethoven.'
+},
+'Luigi Boccherini':{
+bio:'Violonchelista y compositor italiano que desarrolló buena parte de su carrera en España.',
+works:'Quinteto en mi mayor Op. 11 n.º 5, Música nocturna de las calles de Madrid, numerosos quintetos de cuerda.',
+style:'Su escritura destaca por elegancia, lirismo y un tratamiento particularmente rico del violonchelo.',
+legacy:'Amplió las posibilidades de la música de cámara clásica y dio al violonchelo un protagonismo inusual para su época.'
+},
+'W. A. Mozart':{
+bio:'Niño prodigio nacido en Salzburgo, recorrió Europa desde muy joven y terminó estableciéndose como compositor independiente en Viena. Su carrera fue corta, pero extraordinariamente productiva.',
+works:'Le nozze di Figaro, Don Giovanni, Die Zauberflöte, Sinfonía n.º 40, Sinfonía n.º 41 “Júpiter”, Réquiem, conciertos para piano.',
+style:'Combina equilibrio clásico, virtuosismo técnico, riqueza contrapuntística y una capacidad excepcional para caracterizar psicológicamente a los personajes en la ópera.',
+legacy:'Llevó prácticamente todos los géneros de su tiempo a un altísimo grado de perfección formal y expresiva. Su escritura influyó decisivamente en Beethoven y en la tradición clásica posterior.'
+},
+'L. van Beethoven':{
+bio:'Nacido en Bonn y establecido en Viena, comenzó dentro de la tradición clásica de Haydn y Mozart. Su progresiva sordera no detuvo una carrera que transformó profundamente la música europea.',
+works:'Sinfonías n.º 3 “Heroica”, 5 y 9; sonatas Patética, Claro de luna y Hammerklavier; Fidelio; últimos cuartetos.',
+style:'Utiliza desarrollo motívico intenso, contrastes dramáticos, expansión formal y una concepción cada vez más personal de armonía y estructura.',
+legacy:'Redefinió la idea del compositor como artista autónomo y convirtió formas clásicas en vehículos de expresión individual monumental, abriendo el Romanticismo.'
+},
+'Niccolò Paganini':{
+bio:'Violinista italiano cuya técnica extraordinaria dio origen a una imagen casi legendaria del virtuoso romántico.',
+works:'24 Caprichos Op. 1, conciertos para violín n.º 1 y 2.',
+style:'Empleó armónicos, pizzicato de mano izquierda, dobles cuerdas, grandes saltos y recursos técnicos espectaculares.',
+legacy:'Transformó la técnica violinística e inspiró a Liszt a trasladar al piano una idea semejante de virtuosismo trascendental.'
+},
+'Carl Maria von Weber':{
+bio:'Compositor, pianista y director alemán. Su carrera teatral fue esencial para el surgimiento de una ópera específicamente alemana.',
+works:'Der Freischütz, Euryanthe, Oberon.',
+style:'Utilizó motivos recurrentes, color orquestal y ambientes sobrenaturales o folclóricos.',
+legacy:'Preparó el camino para la ópera romántica de Wagner y el nacionalismo musical germánico.'
+},
+'Gioachino Rossini':{
+bio:'Compositor italiano que alcanzó enorme fama europea antes de cumplir cuarenta años y después redujo drásticamente su actividad operística.',
+works:'Il barbiere di Siviglia, Guillaume Tell, La Cenerentola.',
+style:'Melodía brillante, crescendos acumulativos, agilidad vocal y gran sentido cómico y teatral.',
+legacy:'Dominó la ópera italiana de comienzos del siglo XIX y fue una figura central del bel canto.'
+},
+'Franz Schubert':{
+bio:'Vivió casi toda su vida en Viena y murió a los 31 años. Aunque no alcanzó la fama pública de Beethoven, produjo una cantidad extraordinaria de música.',
+works:'Winterreise, Die schöne Müllerin, Sinfonía “Inacabada”, Quinteto “La trucha”, Cuarteto La muerte y la doncella.',
+style:'Destaca por melodía lírica, modulaciones inesperadas y una sensibilidad particular para unir poesía y música.',
+legacy:'Elevó el lied a una forma artística mayor y ejerció profunda influencia en la armonía y la expresión románticas.'
+},
+'Hector Berlioz':{
+bio:'Compositor francés cuya carrera estuvo ligada también a la crítica musical y la dirección orquestal.',
+works:'Symphonie fantastique, Harold en Italie, Grande messe des morts, Les Troyens.',
+style:'Usó enormes fuerzas orquestales, timbres poco convencionales y narrativas musicales explícitas.',
+legacy:'Fue uno de los grandes innovadores de la orquestación y de la música programática del siglo XIX.'
+},
+'Felix Mendelssohn':{
+bio:'Compositor, pianista y director alemán de familia culta y acomodada. Fue una figura central de la vida musical de Leipzig.',
+works:'Concierto para violín, Sueño de una noche de verano, Sinfonía Italiana, oratorio Elias.',
+style:'Combina claridad clásica, lirismo romántico y escritura contrapuntística refinada.',
+legacy:'Fue decisivo en la recuperación moderna de Bach, especialmente con la interpretación de la Pasión según San Mateo en 1829.'
+},
+'Frédéric Chopin':{
+bio:'Nacido en Polonia y establecido en París, centró casi toda su producción en el piano.',
+works:'Nocturnos, Baladas, Polonesas, Mazurcas, Estudios Op. 10 y Op. 25, Sonata n.º 2.',
+style:'Transformó el piano mediante rubato, ornamentación integrada, nuevas texturas y armonías cromáticas.',
+legacy:'Redefinió la escritura pianística romántica y su influencia se extiende desde Liszt y Debussy hasta el jazz y la música cinematográfica.'
+},
+'Robert Schumann':{
+bio:'Compositor, crítico y escritor alemán. Una lesión frustró su carrera como pianista virtuoso, orientándolo hacia la composición y la crítica.',
+works:'Carnaval, Kinderszenen, Dichterliebe, Concierto para piano, Sinfonía n.º 3 “Renana”.',
+style:'Su música está estrechamente ligada a literatura, miniatura psicológica, motivos simbólicos y contrastes de carácter.',
+legacy:'Fue una figura central del Romanticismo y defendió activamente a jóvenes compositores, entre ellos Brahms.'
+},
+'Franz Liszt':{
+bio:'Pianista húngaro de fama internacional, director y compositor. Su figura ayudó a crear el modelo moderno del recital solista.',
+works:'Sonata en si menor, Años de peregrinaje, Rapsodias húngaras, Estudios de ejecución trascendental.',
+style:'Virtuosismo extremo, transformación temática, armonía avanzada y experimentación formal.',
+legacy:'Revolucionó la técnica pianística y creó el poema sinfónico, influyendo en Wagner, Richard Strauss y numerosos compositores del siglo XX.'
+},
+'Richard Wagner':{
+bio:'Compositor y teórico alemán que concibió la ópera como “obra de arte total”. Construyó un teatro específico en Bayreuth para representar sus dramas musicales.',
+works:'Tristan und Isolde, Der Ring des Nibelungen, Die Meistersinger von Nürnberg, Parsifal.',
+style:'Uso sistemático de leitmotivs, continuidad dramática, cromatismo extremo y una orquesta de enorme función psicológica.',
+legacy:'Su lenguaje armónico tensionó la tonalidad hasta sus límites e influyó tanto en Mahler y Strauss como, indirectamente, en la atonalidad de Schoenberg.'
+},
+'Giuseppe Verdi':{
+bio:'Compositor italiano cuya carrera acompañó el proceso del Risorgimento y la unificación italiana.',
+works:'Rigoletto, La traviata, Aida, Otello, Falstaff.',
+style:'Gran potencia melódica, claridad dramática y evolución hacia una integración cada vez mayor entre voz, orquesta y acción teatral.',
+legacy:'Transformó la ópera italiana del siglo XIX y creó algunos de los personajes dramáticos más duraderos del repertorio.'
+},
+'Anton Bruckner':{
+bio:'Organista y compositor austríaco profundamente religioso, asociado a Viena y admirador de Wagner.',
+works:'Sinfonías n.º 4, 7, 8 y 9; Te Deum.',
+style:'Grandes arcos sinfónicos, bloques orquestales, silencios estructurales y fuerte influencia de la sonoridad del órgano.',
+legacy:'Expandió la escala de la sinfonía y preparó el terreno para Mahler y la tradición austroalemana tardorromántica.'
+},
+'Johannes Brahms':{
+bio:'Nacido en Hamburgo y establecido en Viena, fue promovido tempranamente por Robert y Clara Schumann.',
+works:'Sinfonías 1–4, Un réquiem alemán, Conciertos para piano, Concierto para violín, música de cámara.',
+style:'Combina formas clásicas con armonía romántica, desarrollo motívico extremadamente concentrado y complejidad rítmica.',
+legacy:'Demostró que la tradición de Bach, Beethoven y Schumann podía renovarse sin abandonar las formas heredadas.'
+},
+'Camille Saint-Saëns':{
+bio:'Compositor, pianista, organista y erudito francés de carrera extraordinariamente larga.',
+works:'Carnaval de los animales, Danse macabre, Sinfonía n.º 3 “con órgano”, Concierto para violonchelo n.º 1.',
+style:'Elegancia formal, virtuosismo, claridad y dominio de la orquestación.',
+legacy:'Fue una figura central en la institucionalización de la música instrumental francesa del siglo XIX.'
+},
+'Georges Bizet':{
+bio:'Compositor francés que murió pocos meses después del estreno inicialmente problemático de Carmen.',
+works:'Carmen, L’Arlésienne, Sinfonía en do.',
+style:'Melodía directa, color orquestal y agudo sentido dramático.',
+legacy:'Carmen se convirtió en una de las óperas más influyentes y representadas de la historia, anticipando rasgos del verismo.'
+},
+'Modest Mussorgsky':{
+bio:'Miembro del grupo nacionalista ruso conocido como “Los Cinco”. Tuvo una vida personal difícil y murió relativamente joven.',
+works:'Boris Godunov, Cuadros de una exposición, Una noche en el monte pelado.',
+style:'Buscó una expresión directa, cercana al habla rusa, con armonías audaces y rechazo de ciertas convenciones académicas.',
+legacy:'Su originalidad influyó profundamente en Debussy, Ravel y la música rusa del siglo XX.'
+},
+'Piotr I. Chaikovski':{
+bio:'Compositor ruso formado en el Conservatorio de San Petersburgo, a diferencia de varios nacionalistas autodidactas de su generación.',
+works:'El lago de los cisnes, El cascanueces, La bella durmiente, Sinfonía n.º 6 “Patética”, Concierto para piano n.º 1.',
+style:'Melodismo intenso, gran sentido de la forma, color orquestal y una expresión emocional muy directa.',
+legacy:'Logró una síntesis internacionalmente accesible entre tradición europea y sensibilidad rusa.'
+},
+'Antonín Dvořák':{
+bio:'Compositor checo que alcanzó fama internacional y dirigió durante un tiempo el Conservatorio Nacional de Nueva York.',
+works:'Sinfonía n.º 9 “Del Nuevo Mundo”, Danzas eslavas, Concierto para violonchelo, Rusalka.',
+style:'Melodía abundante, ritmos de danza, claridad formal y uso estilizado de materiales nacionales.',
+legacy:'Fue una figura fundamental del nacionalismo checo y defendió la importancia de las tradiciones locales para construir nuevas músicas nacionales.'
+},
+'Edvard Grieg':{
+bio:'Compositor noruego formado en Leipzig y fuertemente asociado al desarrollo de una identidad musical noruega.',
+works:'Concierto para piano, Peer Gynt, Piezas líricas.',
+style:'Miniaturas de gran color armónico, melodías inspiradas en el folclore y una escritura pianística muy idiomática.',
+legacy:'Su lenguaje armónico y modal influyó en compositores posteriores, incluido Debussy.'
+},
+'Nikolái Rimski-Kórsakov':{
+bio:'Oficial naval y compositor ruso, miembro de “Los Cinco” y posteriormente profesor del Conservatorio de San Petersburgo.',
+works:'Scheherazade, Capricho español, El gallo de oro, La gran Pascua rusa.',
+style:'Orquestación brillante, exotismo, escalas no convencionales y gran sentido del color.',
+legacy:'Su tratado de orquestación y su docencia influyeron directamente en generaciones de compositores rusos, incluido Stravinsky.'
+},
+'Giacomo Puccini':{
+bio:'Compositor italiano especializado casi por completo en ópera, heredero de la tradición de Verdi.',
+works:'La bohème, Tosca, Madama Butterfly, Turandot.',
+style:'Continuidad dramática, orquestación muy refinada, melodías memorables y uso eficaz de motivos recurrentes.',
+legacy:'Fue una de las grandes figuras del verismo y de la ópera internacional de comienzos del siglo XX.'
+},
+'Gustav Mahler':{
+bio:'Compositor y director nacido en Bohemia, célebre también por su trabajo al frente de la Ópera de Viena.',
+works:'Sinfonías 1–9, Das Lied von der Erde, Kindertotenlieder.',
+style:'Combina marchas, canciones populares, ironía, tragedia y enormes estructuras sinfónicas.',
+legacy:'Expandió la sinfonía hasta un límite expresivo y formal que abrió caminos hacia Schoenberg, Shostakovich y gran parte del siglo XX.'
+},
+'Claude Debussy':{
+bio:'Compositor francés formado en el Conservatorio de París y ganador del Prix de Rome.',
+works:'Prélude à l’après-midi d’un faune, La mer, Pelléas et Mélisande, Images, Preludios para piano.',
+style:'Escalas modales y de tonos enteros, acordes usados por color más que por función, timbres delicados y formas flexibles.',
+legacy:'Cambió profundamente la concepción occidental de armonía, tiempo musical y orquestación. Su influencia llega al jazz y a numerosos compositores del siglo XX.'
+},
+'Richard Strauss':{
+bio:'Compositor y director alemán, figura clave entre el Romanticismo tardío y el modernismo.',
+works:'Also sprach Zarathustra, Don Juan, Ein Heldenleben, Salome, Der Rosenkavalier.',
+style:'Orquestación extremadamente virtuosa, cromatismo avanzado y gran capacidad narrativa.',
+legacy:'Llevó el poema sinfónico y la ópera postwagneriana a un nivel de sofisticación excepcional.'
+},
+'Jean Sibelius':{
+bio:'Compositor finlandés cuya obra quedó estrechamente ligada al despertar nacional de Finlandia.',
+works:'Finlandia, Sinfonías 2, 5 y 7, Concierto para violín.',
+style:'Desarrollo orgánico de motivos pequeños, texturas austeras y una concepción muy personal de la forma sinfónica.',
+legacy:'Ofreció una alternativa al gigantismo germánico y fue redescubierto como una figura crucial de la modernidad sinfónica.'
+},
+'Erik Satie':{
+bio:'Compositor francés excéntrico vinculado a ambientes bohemios de París.',
+works:'Gymnopédies, Gnossiennes, Parade.',
+style:'Economía de medios, repetición, armonías estáticas, humor e instrucciones absurdas en las partituras.',
+legacy:'Anticipó ideas minimalistas, conceptuales y antirománticas que reaparecerían en Cage y otros compositores del siglo XX.'
+},
+'Arnold Schoenberg':{
+bio:'Compositor vienés que pasó de un Romanticismo muy cromático a la atonalidad y después al método dodecafónico.',
+works:'Verklärte Nacht, Pierrot Lunaire, Erwartung, Variaciones para orquesta Op. 31.',
+style:'Desarrolló la “emancipación de la disonancia” y un sistema de composición basado en series de doce notas.',
+legacy:'Cambió el lenguaje de la música académica del siglo XX y fundó, junto a Berg y Webern, la Segunda Escuela de Viena.'
+},
+'Maurice Ravel':{
+bio:'Compositor francés de ascendencia vasca, célebre por su precisión técnica y sofisticación orquestal.',
+works:'Boléro, Daphnis et Chloé, La Valse, Gaspard de la nuit, Concierto para piano en sol.',
+style:'Armonía refinada, ritmos de danza, claridad formal y una extraordinaria imaginación tímbrica.',
+legacy:'Es uno de los grandes maestros de la orquestación y un puente entre impresionismo, neoclasicismo y modernidad.'
+},
+'Manuel de Falla':{
+bio:'Compositor español que trabajó en Madrid, París y posteriormente Granada y Argentina.',
+works:'El amor brujo, El sombrero de tres picos, Noches en los jardines de España.',
+style:'Integra elementos del flamenco y otras tradiciones españolas con técnicas armónicas modernas.',
+legacy:'Fue decisivo para situar la música española dentro de las corrientes internacionales del siglo XX.'
+},
+'Béla Bartók':{
+bio:'Compositor, pianista y etnomusicólogo húngaro que recopiló miles de melodías populares de Europa oriental.',
+works:'Música para cuerdas, percusión y celesta, Concierto para orquesta, Mikrokosmos, Cuartetos de cuerda.',
+style:'Ritmos asimétricos, modos folclóricos, estructuras simétricas, disonancia y gran energía percusiva.',
+legacy:'Demostró que la investigación del folclore podía convertirse en un lenguaje moderno sofisticado sin caer en simple exotismo.'
+},
+'Igor Stravinsky':{
+bio:'Compositor ruso que vivió en Francia, Suiza y Estados Unidos. Su carrera atravesó varias transformaciones estilísticas radicales.',
+works:'El pájaro de fuego, Petrushka, La consagración de la primavera, Pulcinella, The Rake’s Progress.',
+style:'Ritmos irregulares, acentos desplazados, bloques sonoros, orquestación incisiva y, más tarde, neoclasicismo y serialismo.',
+legacy:'Fue una de las figuras más influyentes del siglo XX. La consagración de la primavera redefinió el papel del ritmo en la música occidental.'
+},
+'Anton Webern':{
+bio:'Compositor austríaco, alumno de Schoenberg y miembro de la Segunda Escuela de Viena.',
+works:'Sinfonía Op. 21, Variaciones para piano Op. 27, Seis bagatelas Op. 9.',
+style:'Obras muy breves, gran concentración estructural, serialismo y uso del timbre como elemento constructivo.',
+legacy:'Tras la Segunda Guerra Mundial se convirtió en referencia esencial para Boulez, Stockhausen y el serialismo integral.'
+},
+'Alban Berg':{
+bio:'Compositor austríaco y alumno de Schoenberg que mantuvo una fuerte dimensión expresiva dentro del lenguaje atonal.',
+works:'Wozzeck, Lulu, Concierto para violín.',
+style:'Integra dodecafonismo, tonalidad residual, formas clásicas y dramatismo romántico.',
+legacy:'Demostró que la atonalidad podía conservar una intensa fuerza teatral y emocional.'
+},
+'Sergei Prokofiev':{
+bio:'Compositor y pianista ruso que vivió varios años fuera de la Unión Soviética antes de regresar definitivamente en 1936.',
+works:'Romeo y Julieta, Pedro y el lobo, Sinfonía clásica, conciertos para piano n.º 2 y 3.',
+style:'Ritmos motores, armonías ásperas, ironía, lirismo y claridad formal.',
+legacy:'Creó uno de los lenguajes más reconocibles del modernismo ruso y dejó una enorme influencia en música sinfónica, ballet y cine.'
+},
+'George Gershwin':{
+bio:'Compositor estadounidense surgido de Broadway y Tin Pan Alley, capaz de moverse entre canción popular y sala de conciertos.',
+works:'Rhapsody in Blue, An American in Paris, Porgy and Bess.',
+style:'Fusiona jazz, blues, canción popular y formas sinfónicas.',
+legacy:'Fue decisivo para legitimar elementos del jazz dentro de la música de concierto estadounidense.'
+},
+'Francis Poulenc':{
+bio:'Compositor francés asociado al grupo Les Six.',
+works:'Gloria, Stabat Mater, Dialogues des Carmélites, Concierto para dos pianos.',
+style:'Alterna humor, ligereza, lirismo y profunda espiritualidad, normalmente dentro de una armonía relativamente tonal.',
+legacy:'Fue una de las voces francesas más personales del siglo XX y una figura fundamental de la música vocal moderna.'
+},
+'Aaron Copland':{
+bio:'Compositor estadounidense formado parcialmente en París con Nadia Boulanger.',
+works:'Appalachian Spring, Billy the Kid, Rodeo, Fanfare for the Common Man.',
+style:'Amplios intervalos, texturas abiertas y uso estilizado de músicas populares estadounidenses.',
+legacy:'Ayudó a definir una sonoridad asociada a la identidad estadounidense en concierto, ballet y cine.'
+},
+'Dmitri Shostakovich':{
+bio:'Compositor soviético cuya carrera estuvo marcada por una relación compleja y peligrosa con el régimen de Stalin.',
+works:'Sinfonías 5, 7, 10 y 14; Cuartetos 8 y 15; ópera Lady Macbeth de Mtsensk.',
+style:'Ironía, marchas grotescas, contrastes extremos, códigos personales y profundo dramatismo.',
+legacy:'Renovó la sinfonía y el cuarteto del siglo XX y se convirtió en símbolo de las tensiones entre creación artística y poder político.'
+},
+'Olivier Messiaen':{
+bio:'Compositor, organista y profesor francés, prisionero de guerra durante la Segunda Guerra Mundial.',
+works:'Quatuor pour la fin du temps, Turangalîla-Symphonie, Catalogue d’oiseaux.',
+style:'Modos propios, ritmos no retrogradables, influencia de músicas indias, canto de aves y una concepción muy colorista de la armonía.',
+legacy:'Fue maestro de Boulez y Stockhausen y ejerció enorme influencia sobre la música europea de posguerra.'
+},
+'Benjamin Britten':{
+bio:'Compositor, pianista y director inglés, fundador del Festival de Aldeburgh.',
+works:'Peter Grimes, War Requiem, The Turn of the Screw, Young Person’s Guide to the Orchestra.',
+style:'Claridad dramática, escritura vocal idiomática y un lenguaje moderno pero comunicativo.',
+legacy:'Revitalizó la ópera inglesa y se convirtió en una de las figuras británicas más importantes del siglo XX.'
+},
+'John Cage':{
+bio:'Compositor y pensador estadounidense interesado en azar, silencio, filosofía zen y sonidos cotidianos.',
+works:'4′33″, Sonatas and Interludes, Music of Changes.',
+style:'Procedimientos aleatorios, piano preparado, indeterminación y ampliación radical de qué puede ser material musical.',
+legacy:'Cambió la discusión sobre autoría, silencio, ruido y escucha. Su influencia alcanza música experimental, arte conceptual y performance.'
+},
+'György Ligeti':{
+bio:'Compositor húngaro-rumano que huyó a Occidente tras la Revolución húngara de 1956.',
+works:'Atmosphères, Lux Aeterna, Requiem, Études pour piano.',
+style:'Micropolifonía, masas sonoras, polirritmia y una imaginación tímbrica extremadamente original.',
+legacy:'Fue una de las grandes alternativas al serialismo de posguerra y su música alcanzó gran público a través del cine de Stanley Kubrick.'
+},
+'Pierre Boulez':{
+bio:'Compositor y director francés, figura central de la vanguardia europea de posguerra.',
+works:'Le Marteau sans maître, Structures, Répons.',
+style:'Serialismo, precisión extrema, complejidad rítmica y posterior integración de electrónica en tiempo real.',
+legacy:'Fue clave en instituciones como IRCAM y ejerció gran influencia como compositor, director y organizador cultural.'
+},
+'Karlheinz Stockhausen':{
+bio:'Compositor alemán asociado al estudio electrónico de Colonia y a la vanguardia de posguerra.',
+works:'Gesang der Jünglinge, Kontakte, Gruppen, ciclo Licht.',
+style:'Electrónica, espacialización, serialismo y estructuras de escala monumental.',
+legacy:'Expandió radicalmente la concepción de espacio, tecnología y forma musical, influyendo también en rock y música electrónica.'
+},
+'Arvo Pärt':{
+bio:'Compositor estonio que, tras una etapa modernista, atravesó un largo periodo de silencio creativo y desarrolló después su lenguaje tintinnabuli.',
+works:'Tabula Rasa, Fratres, Spiegel im Spiegel, Te Deum.',
+style:'Texturas austeras, tríadas, líneas melódicas simples y un fuerte componente contemplativo y espiritual.',
+legacy:'Su lenguaje se convirtió en una de las corrientes más reconocibles de la música contemporánea y ha tenido gran presencia en cine y cultura audiovisual.'
+},
+'Terry Riley':{
+bio:'Compositor estadounidense ligado al nacimiento del minimalismo y a la improvisación.',
+works:'In C, A Rainbow in Curved Air.',
+style:'Patrones repetitivos, estructuras abiertas, improvisación y fuerte interés por músicas de India.',
+legacy:'In C es una de las obras fundacionales del minimalismo y ejerció gran influencia sobre Reich y otros compositores.'
+},
+'Steve Reich':{
+bio:'Compositor estadounidense que comenzó experimentando con cintas y procesos de desfase.',
+works:'It’s Gonna Rain, Piano Phase, Music for 18 Musicians, Different Trains.',
+style:'Repetición, pulsación estable, phasing, procesos audibles y complejas superposiciones rítmicas.',
+legacy:'Fue decisivo en el minimalismo y su influencia se extiende a música electrónica, rock, ambient y composición audiovisual.'
+},
+'Philip Glass':{
+bio:'Compositor estadounidense que trabajó con Ravi Shankar y fundó su propio ensemble para interpretar su música.',
+works:'Einstein on the Beach, Glassworks, Akhnaten, Koyaanisqatsi.',
+style:'Arpegios repetitivos, procesos acumulativos, pulsación continua y transformaciones graduales.',
+legacy:'Convirtió el minimalismo en un lenguaje de enorme alcance público, especialmente en ópera, cine y teatro.'
+},
+'John Adams':{
+bio:'Compositor estadounidense asociado inicialmente al minimalismo de la Costa Oeste.',
+works:'Harmonielehre, Nixon in China, The Death of Klinghoffer, Short Ride in a Fast Machine.',
+style:'Combina pulsación minimalista con armonía postromántica, gran orquesta y narrativa dramática.',
+legacy:'Amplió el minimalismo hacia formas sinfónicas y operísticas de gran escala.'
+},
+'Kaija Saariaho':{
+bio:'Compositora finlandesa vinculada al IRCAM de París y a la investigación electroacústica.',
+works:'L’Amour de loin, Graal théâtre, Orion, Lichtbogen.',
+style:'Transformaciones tímbricas, texturas espectrales, electrónica y un sentido muy refinado del color.',
+legacy:'Fue una de las compositoras más importantes de finales del siglo XX y comienzos del XXI, especialmente en ópera y música espectral.'
+},
+'Thomas Adès':{
+bio:'Compositor, pianista y director británico que alcanzó reconocimiento internacional desde muy joven.',
+works:'Asyla, The Tempest, The Exterminating Angel, Polaris.',
+style:'Lenguaje armónico denso, ritmos complejos, eclecticismo y gran imaginación orquestal.',
+legacy:'Es una de las figuras más influyentes de la composición británica contemporánea.'
+},
+'Caroline Shaw':{
+bio:'Compositora, violinista y cantante estadounidense, ganadora del Pulitzer de Música en 2013.',
+works:'Partita for 8 Voices, Entr’acte, Narrow Sea.',
+style:'Combina técnicas vocales extendidas, referencias antiguas, texturas contemporáneas y sensibilidad pop.',
+legacy:'Representa una generación que borra fronteras entre música académica, experimental y popular.'
+}
+};
+
+const eventDetails={
+'Caída de Constantinopla':{
+context:'Constantinopla era la capital del Imperio bizantino y controlaba un punto estratégico entre Europa y Asia. El Imperio otomano, dirigido por el sultán Mehmed II, buscaba conquistarla para consolidar su poder regional.',
+what:'En 1453, tras semanas de sitio, los otomanos emplearon artillería pesada y un ejército muy superior. El emperador Constantino XI murió durante la defensa de la ciudad.',
+impact:'La conquista puso fin al Imperio bizantino. Constantinopla se convirtió en capital otomana y, con el tiempo, Estambul. El hecho modificó rutas comerciales y equilibrios políticos y suele utilizarse como uno de los hitos simbólicos del final de la Edad Media.'
+},
+'Imprenta de Gutenberg':{
+context:'Antes de la imprenta de tipos móviles, los libros europeos se copiaban a mano o mediante técnicas mucho más lentas. El acceso al conocimiento escrito era caro y limitado.',
+what:'Hacia mediados del siglo XV, Johannes Gutenberg combinó tipos móviles metálicos, tinta adecuada y una prensa mecánica eficiente. La Biblia de Gutenberg se convirtió en el ejemplo más célebre de la nueva tecnología.',
+impact:'La impresión redujo costos, multiplicó los libros y aceleró la circulación de ideas. Fue crucial para la Reforma, la ciencia moderna, la educación y la formación de públicos alfabetizados.'
+},
+'Llegada europea a América':{
+context:'Las monarquías ibéricas buscaban rutas comerciales hacia Asia mientras Portugal avanzaba por la costa africana. Cristóbal Colón propuso llegar a Asia navegando hacia occidente.',
+what:'En 1492, una expedición financiada por los Reyes Católicos llegó al Caribe. Colón creyó haber alcanzado territorios asiáticos, pero los viajes posteriores revelaron para los europeos la existencia de un continente hasta entonces desconocido por ellos.',
+impact:'El contacto desencadenó conquista, colonización, intercambio de cultivos, animales y enfermedades, tráfico de esclavos y enormes transformaciones demográficas. Para los pueblos indígenas, las consecuencias incluyeron violencia, explotación y epidemias devastadoras.'
+},
+'Reforma protestante':{
+context:'A comienzos del siglo XVI existía creciente crítica a prácticas de la Iglesia católica, como la venta de indulgencias, y demandas de reforma religiosa.',
+what:'En 1517 Martín Lutero hizo públicas sus 95 tesis. Sus ideas sobre autoridad bíblica, fe y salvación se difundieron rápidamente gracias a la imprenta y recibieron apoyo de diversos príncipes alemanes.',
+impact:'Europa occidental se dividió religiosamente. Surgieron iglesias luteranas, reformadas y otras ramas protestantes, mientras la Iglesia católica respondió con la Contrarreforma. El proceso tuvo consecuencias políticas, educativas y culturales de largo alcance.'
+},
+'Conquista de Tenochtitlan':{
+context:'Hernán Cortés llegó a Mesoamérica en 1519 y formó alianzas con pueblos indígenas enemigos del Imperio mexica, especialmente los tlaxcaltecas.',
+what:'Tras una primera ocupación, la retirada española durante la Noche Triste y un prolongado sitio, Tenochtitlan cayó el 13 de agosto de 1521. Cuauhtémoc fue capturado.',
+impact:'La caída abrió el camino para la consolidación del dominio español en gran parte de Mesoamérica. La conquista transformó profundamente sistemas políticos, religiosos, económicos y demográficos.'
+},
+'Revolución científica':{
+context:'Entre los siglos XVI y XVII se desarrollaron nuevas formas de estudiar la naturaleza basadas en observación, matemáticas, experimentación y revisión crítica de autoridades antiguas.',
+what:'La publicación de De revolutionibus de Copérnico en 1543 cuestionó el modelo geocéntrico. Posteriormente Kepler, Galileo, Bacon, Descartes y Newton ampliaron esta transformación.',
+impact:'Se consolidó una visión matemática y experimental del mundo natural. Este proceso sentó bases fundamentales para la ciencia moderna y alteró profundamente la relación entre conocimiento, religión y autoridad.'
+},
+'Derrota de la Armada Invencible':{
+context:'Las tensiones entre Felipe II de España e Isabel I de Inglaterra combinaban religión, rivalidad comercial y política. Inglaterra apoyaba a rebeldes neerlandeses protestantes y corsarios ingleses atacaban intereses españoles. Felipe II decidió organizar una invasión para derrocar a Isabel.',
+what:'En 1588 la Gran Armada española, dirigida por el duque de Medina Sidonia, navegó hacia el canal de la Mancha para enlazar con tropas del duque de Parma en Flandes. La flota inglesa, con figuras como Charles Howard y Francis Drake, hostigó a los españoles. Tras el combate de Gravelinas, la Armada tuvo que retirarse rodeando las islas británicas y sufrió graves pérdidas por tormentas.',
+impact:'La derrota frustró la invasión, reforzó el prestigio de Isabel I y se convirtió en un poderoso mito nacional inglés. España siguió siendo una gran potencia naval durante décadas, por lo que no supuso su colapso inmediato, pero el episodio mostró los límites logísticos de una operación naval de escala continental y fortaleció la confianza marítima inglesa.'
+},
+'Guerra de los Treinta Años':{
+context:'El Sacro Imperio Romano Germánico estaba dividido entre territorios católicos y protestantes, pero el conflicto también involucraba rivalidades dinásticas entre Habsburgo, Francia, Suecia y otras potencias.',
+what:'Comenzó en 1618 con la rebelión bohemia y se transformó en una guerra europea. Intervinieron fuerzas imperiales, españolas, suecas, francesas y numerosos estados alemanes.',
+impact:'Fue devastadora para amplias zonas de Europa central. La Paz de Westfalia de 1648 redujo el poder imperial y consolidó un sistema de estados con mayor autonomía política.'
+},
+'Paz de Westfalia':{
+context:'Tras tres décadas de guerra, las principales potencias europeas buscaban terminar un conflicto que había agotado recursos y devastado poblaciones.',
+what:'Los tratados firmados en Münster y Osnabrück en 1648 pusieron fin a la Guerra de los Treinta Años y también resolvieron otros conflictos europeos.',
+impact:'Reconocieron nuevas realidades territoriales y religiosas y aumentaron la autonomía de los estados del Sacro Imperio. Con frecuencia se considera un antecedente importante del sistema moderno de estados soberanos, aunque esa interpretación debe matizarse.'
+},
+'Principia de Newton':{
+context:'La astronomía de Copérnico, Kepler y Galileo había cuestionado la física aristotélica, pero faltaba una teoría general que explicara tanto movimientos terrestres como celestes.',
+what:'En 1687 Isaac Newton publicó Philosophiæ Naturalis Principia Mathematica, donde formuló sus leyes del movimiento y la gravitación universal.',
+impact:'La obra unificó fenómenos celestes y terrestres bajo las mismas leyes matemáticas y se convirtió en fundamento de la física clásica durante más de dos siglos.'
+},
+'Ilustración europea':{
+context:'Durante los siglos XVII y XVIII crecieron la confianza en la razón, la ciencia y la crítica de las autoridades tradicionales.',
+what:'Pensadores como Locke, Voltaire, Montesquieu, Rousseau, Diderot y Kant debatieron sobre derechos, gobierno, tolerancia, educación y conocimiento.',
+impact:'Sus ideas influyeron en reformas políticas, revoluciones atlánticas, constitucionalismo, secularización y nuevas concepciones de ciudadanía.'
+},
+'Revolución Industrial':{
+context:'Gran Bretaña reunía capital, comercio, carbón, mano de obra y condiciones políticas favorables a la innovación productiva.',
+what:'Desde mediados del siglo XVIII se generalizaron máquinas textiles, uso intensivo del carbón, fábricas y posteriormente la máquina de vapor.',
+impact:'La producción creció enormemente y aceleró la urbanización. También aparecieron duras condiciones laborales, nuevas clases sociales y cambios ambientales profundos. El modelo industrial se extendió después por Europa, Estados Unidos y otras regiones.'
+},
+'Independencia de EE. UU.':{
+context:'Tras la Guerra de los Siete Años, Gran Bretaña impuso nuevos impuestos a sus colonias norteamericanas. Muchos colonos rechazaron pagar tributos sin representación parlamentaria.',
+what:'En 1776 el Segundo Congreso Continental aprobó la Declaración de Independencia. La guerra contra Gran Bretaña continuó hasta la victoria estadounidense, apoyada decisivamente por Francia.',
+impact:'El nuevo país adoptó una constitución republicana y federal. Su independencia influyó en movimientos posteriores, aunque la esclavitud y la exclusión política de gran parte de la población revelaban fuertes límites a sus ideales de libertad.'
+},
+'Revolución Francesa':{
+context:'Francia enfrentaba deuda, desigualdad fiscal, crisis alimentaria y un sistema político incapaz de reformarse con facilidad.',
+what:'En 1789 los Estados Generales desembocaron en una revolución. Cayeron privilegios feudales, se proclamó la Declaración de los Derechos del Hombre y el proceso pasó por monarquía constitucional, república, Terror y finalmente el ascenso de Napoleón.',
+impact:'Transformó profundamente ideas de ciudadanía, soberanía y derechos y debilitó estructuras aristocráticas en Europa. También produjo violencia política masiva y guerras continentales.'
+},
+'Revolución Haitiana':{
+context:'Saint-Domingue era la colonia azucarera más rica de Francia y dependía de la explotación brutal de una enorme población esclavizada.',
+what:'En 1791 comenzó una gran rebelión de esclavos. Figuras como Toussaint Louverture y posteriormente Jean-Jacques Dessalines lideraron diferentes etapas del proceso.',
+impact:'Haití declaró su independencia en 1804 y se convirtió en la primera república negra moderna surgida de una revuelta de esclavos exitosa. El hecho sacudió profundamente al sistema esclavista atlántico.'
+},
+'Guerras napoleónicas':{
+context:'Tras la Revolución Francesa, Francia permaneció en conflicto con diversas coaliciones monárquicas europeas. Napoleón Bonaparte llegó al poder y expandió la influencia francesa.',
+what:'Entre 1803 y 1815 Francia combatió contra Gran Bretaña, Austria, Rusia, Prusia, España y otros estados. Las campañas incluyeron Austerlitz, la invasión de Rusia y Waterloo.',
+impact:'Redibujaron fronteras, difundieron reformas legales y nacionalismo y causaron millones de víctimas. La derrota final de Napoleón condujo al Congreso de Viena.'
+},
+'Independencias hispanoamericanas':{
+context:'La invasión napoleónica de España en 1808 debilitó la autoridad de la monarquía y abrió crisis políticas en América.',
+what:'Desde 1810 surgieron juntas, guerras y movimientos independentistas liderados por figuras como Simón Bolívar, José de San Martín, Miguel Hidalgo y José María Morelos.',
+impact:'La mayor parte de Hispanoamérica se independizó durante las décadas siguientes. El proceso terminó con el orden colonial, pero dejó estados políticamente frágiles y sociedades profundamente desiguales.'
+},
+'Congreso de Viena':{
+context:'Tras la derrota de Napoleón, las potencias vencedoras buscaron estabilizar Europa y evitar nuevas revoluciones y hegemonías continentales.',
+what:'Entre 1814 y 1815 Austria, Rusia, Prusia, Gran Bretaña y otras potencias negociaron un nuevo mapa europeo. Klemens von Metternich fue una figura central.',
+impact:'Se restauraron monarquías y se creó un equilibrio de poder relativamente estable. El sistema redujo grandes guerras europeas durante décadas, aunque chocó con crecientes movimientos liberales y nacionalistas.'
+},
+'Primavera de los Pueblos':{
+context:'Las malas cosechas, desigualdad social, industrialización y demandas liberales y nacionalistas alimentaron descontento en Europa.',
+what:'En 1848 estallaron revoluciones en Francia, los estados alemanes, el Imperio austríaco, Italia y otros territorios.',
+impact:'Muchas revoluciones fueron reprimidas, pero aceleraron reformas, abolición de estructuras feudales y movimientos que conducirían a las unificaciones italiana y alemana.'
+},
+'Origen de las especies':{
+context:'Durante el siglo XIX se acumulaba evidencia geológica y biológica incompatible con una visión estática de las especies.',
+what:'Charles Darwin publicó On the Origin of Species en 1859, proponiendo la selección natural como mecanismo principal de evolución.',
+impact:'La teoría transformó la biología y la comprensión del lugar de los seres humanos en la naturaleza. También generó intensos debates científicos, filosóficos y religiosos.'
+},
+'Unificación de Italia':{
+context:'La península italiana estaba dividida en múltiples estados y parcialmente controlada por Austria. El nacionalismo del Risorgimento buscaba una Italia unificada.',
+what:'El Reino de Piamonte-Cerdeña, Cavour, Garibaldi y Víctor Manuel II jugaron papeles centrales. En 1861 se proclamó el Reino de Italia; Roma se incorporó en 1870.',
+impact:'La unificación creó un nuevo estado europeo, aunque persistieron grandes diferencias económicas y sociales entre regiones.'
+},
+'Unificación alemana':{
+context:'Los estados de habla alemana estaban agrupados de forma flexible y Prusia competía con Austria por el liderazgo.',
+what:'Otto von Bismarck dirigió guerras contra Dinamarca, Austria y Francia. En 1871 Guillermo I fue proclamado emperador alemán en Versalles.',
+impact:'La aparición de un poderoso Imperio alemán alteró profundamente el equilibrio europeo y fue un factor central en la política continental previa a la Primera Guerra Mundial.'
+},
+'Segunda Revolución Industrial':{
+context:'La industrialización entró en una nueva fase durante la segunda mitad del siglo XIX.',
+what:'Se expandieron electricidad, acero, química industrial, petróleo, telégrafo, teléfono y nuevas formas de producción.',
+impact:'Aumentó la productividad y creó grandes corporaciones, redes globales y nuevas ciudades industriales. También intensificó competencia imperial y problemas laborales y ambientales.'
+},
+'Invención del cine':{
+context:'La fotografía, los estudios del movimiento y diferentes aparatos ópticos prepararon el terreno para reproducir imágenes en movimiento.',
+what:'En 1895 los hermanos Lumière realizaron célebres proyecciones públicas con el cinematógrafo en París, aunque otros inventores contribuyeron paralelamente al nacimiento del medio.',
+impact:'El cine se convirtió rápidamente en una forma de entretenimiento masivo, arte, propaganda y documentación histórica, transformando la cultura visual del siglo XX.'
+},
+'Primera Guerra Mundial':{
+context:'Rivalidades imperiales, alianzas militares, nacionalismos y carrera armamentista habían creado una situación extremadamente inestable en Europa.',
+what:'El asesinato del archiduque Francisco Fernando en Sarajevo en 1914 desencadenó una cadena de ultimátums y declaraciones de guerra. El conflicto enfrentó a Potencias Centrales y Aliados y se caracterizó por guerra de trincheras, artillería y enormes pérdidas.',
+impact:'Murieron millones de personas y colapsaron los imperios alemán, austrohúngaro, otomano y ruso. El Tratado de Versalles y las tensiones posteriores contribuyeron al escenario de la Segunda Guerra Mundial.'
+},
+'Revolución Rusa':{
+context:'Rusia padecía autoritarismo, desigualdad y enormes pérdidas durante la Primera Guerra Mundial.',
+what:'La Revolución de Febrero de 1917 derribó al zar Nicolás II. En octubre, los bolcheviques liderados por Lenin tomaron el poder y posteriormente vencieron en una guerra civil.',
+impact:'Surgió el primer estado socialista de larga duración, que en 1922 se convirtió en la Unión Soviética y transformó la política mundial del siglo XX.'
+},
+'Pandemia de influenza':{
+context:'La pandemia ocurrió al final de la Primera Guerra Mundial, en un mundo con grandes movimientos de tropas y sistemas sanitarios limitados.',
+what:'Entre 1918 y 1920 una cepa de influenza se propagó mundialmente en varias olas.',
+impact:'Causó decenas de millones de muertes y afectó profundamente a sociedades ya debilitadas por la guerra. Se convirtió en referencia histórica para el estudio de pandemias modernas.'
+},
+'Gran Depresión':{
+context:'La década de 1920 combinó especulación financiera, endeudamiento y desequilibrios económicos.',
+what:'El derrumbe bursátil de 1929 en Estados Unidos fue seguido por quiebras bancarias, contracción del crédito y caída del comercio mundial.',
+impact:'El desempleo y la pobreza crecieron dramáticamente. La crisis favoreció nuevas políticas económicas, incluido el New Deal, y contribuyó a la inestabilidad política internacional.'
+},
+'Ascenso del nazismo':{
+context:'Alemania sufría las consecuencias de la Primera Guerra Mundial, crisis económica, polarización política y resentimiento contra el Tratado de Versalles.',
+what:'Adolf Hitler fue nombrado canciller en 1933. El régimen nazi eliminó rápidamente libertades, partidos opositores y controles institucionales.',
+impact:'La dictadura impuso racismo estatal, persecución y expansionismo militar, conduciendo al Holocausto y a la Segunda Guerra Mundial.'
+},
+'Segunda Guerra Mundial':{
+context:'El expansionismo de Alemania, Italia y Japón, el fracaso de la seguridad colectiva y las tensiones no resueltas tras la Primera Guerra Mundial hicieron cada vez más probable un nuevo conflicto.',
+what:'La invasión alemana de Polonia en 1939 desencadenó la guerra europea. El conflicto se volvió global e incluyó frentes en Europa, África, Asia y el Pacífico.',
+impact:'Murieron decenas de millones de personas. Europa quedó devastada, Estados Unidos y la URSS emergieron como superpotencias, se creó la ONU y comenzó el proceso acelerado de descolonización.'
+},
+'Holocausto':{
+context:'El antisemitismo era central en la ideología nazi. Desde 1933 los judíos alemanes fueron progresivamente excluidos de la vida pública y perseguidos.',
+what:'Durante la Segunda Guerra Mundial el régimen nazi implementó deportaciones, guetos, fusilamientos masivos y centros de exterminio como Auschwitz-Birkenau, Treblinka y Sobibor.',
+impact:'Fueron asesinados aproximadamente seis millones de judíos, además de millones de otras víctimas perseguidas por los nazis. El Holocausto transformó el derecho internacional, la memoria histórica y la reflexión sobre genocidio y derechos humanos.'
+},
+'Era nuclear':{
+context:'Durante la Segunda Guerra Mundial, Estados Unidos desarrolló armas atómicas mediante el Proyecto Manhattan.',
+what:'En agosto de 1945 bombas nucleares fueron lanzadas sobre Hiroshima y Nagasaki. Japón anunció su rendición poco después.',
+impact:'Comenzó una era en la que la humanidad adquirió capacidad para destruir ciudades enteras con una sola arma. La disuasión nuclear se convirtió en elemento central de la Guerra Fría.'
+},
+'Fundación de la ONU':{
+context:'La Sociedad de Naciones no había logrado impedir la Segunda Guerra Mundial. Los Aliados planearon una nueva institución internacional durante el conflicto.',
+what:'La Carta de Naciones Unidas fue firmada en San Francisco en 1945 y la organización comenzó oficialmente ese año.',
+impact:'La ONU se convirtió en foro central para diplomacia, seguridad, derechos humanos, desarrollo y cooperación internacional, aunque su capacidad depende de los intereses de los estados miembros.'
+},
+'Inicio de la Guerra Fría':{
+context:'Tras derrotar conjuntamente a la Alemania nazi, Estados Unidos y la Unión Soviética quedaron como superpotencias con sistemas políticos e intereses incompatibles.',
+what:'Entre 1946 y 1947 aumentaron las tensiones por Europa oriental, Alemania, ayuda económica y expansión ideológica.',
+impact:'Durante décadas el mundo quedó estructurado en bloques rivales, con carreras nuclear y espacial, guerras indirectas y competencia política global.'
+},
+'Revolución china':{
+context:'China había atravesado décadas de guerra civil, invasión japonesa y debilidad estatal.',
+what:'En 1949 las fuerzas comunistas de Mao Zedong derrotaron al gobierno nacionalista de Chiang Kai-shek, que se retiró a Taiwán.',
+impact:'Se fundó la República Popular China, transformando el equilibrio de poder asiático y mundial.'
+},
+'Descolonización':{
+context:'Las potencias europeas salieron debilitadas de la Segunda Guerra Mundial, mientras crecían movimientos nacionalistas en Asia y África.',
+what:'India se independizó en 1947 y durante las décadas siguientes numerosos territorios africanos y asiáticos siguieron procesos similares, pacíficos o violentos.',
+impact:'El mapa político mundial cambió radicalmente y decenas de nuevos estados ingresaron a la ONU, aunque muchas fronteras y estructuras económicas coloniales dejaron problemas duraderos.'
+},
+'Sputnik':{
+context:'Estados Unidos y la Unión Soviética competían tecnológica y militarmente durante la Guerra Fría.',
+what:'En 1957 la URSS lanzó Sputnik 1, el primer satélite artificial en orbitar la Tierra.',
+impact:'El éxito soviético inició la carrera espacial, aceleró inversiones en ciencia y educación y aumentó temores sobre tecnología de misiles.'
+},
+'Crisis de los misiles de Cuba':{
+context:'Tras la Revolución cubana, Cuba se acercó a la URSS. En 1962 Moscú instaló misiles nucleares en la isla.',
+what:'Estados Unidos detectó las instalaciones y el presidente John F. Kennedy impuso un bloqueo naval. Durante trece días ambas superpotencias estuvieron cerca de un enfrentamiento nuclear.',
+impact:'La URSS retiró los misiles a cambio de garantías estadounidenses y, secretamente, de la retirada de misiles de Turquía. La crisis llevó a establecer mecanismos de comunicación directa y mayor cautela nuclear.'
+},
+'Llegada a la Luna':{
+context:'La carrera espacial se convirtió en símbolo tecnológico de la competencia entre Estados Unidos y la URSS.',
+what:'El 20 de julio de 1969, Neil Armstrong y Buzz Aldrin descendieron a la superficie lunar durante la misión Apollo 11, mientras Michael Collins permaneció en órbita.',
+impact:'Demostró capacidades tecnológicas extraordinarias y se convirtió en uno de los mayores hitos científicos y simbólicos del siglo XX.'
+},
+'Nacimiento de Internet moderno':{
+context:'Desde los años sesenta existían redes de computadoras como ARPANET, pero utilizaban protocolos diversos.',
+what:'El 1 de enero de 1983 ARPANET adoptó TCP/IP, permitiendo que redes diferentes se interconectaran bajo un estándar común.',
+impact:'Este cambio técnico sentó una de las bases esenciales de Internet tal como funciona actualmente.'
+},
+'Caída del Muro de Berlín':{
+context:'Alemania estaba dividida desde el final de la Segunda Guerra Mundial. La RDA sufría presión económica y crecientes protestas mientras la URSS de Gorbachov reducía su intervención en Europa oriental.',
+what:'El 9 de noviembre de 1989, tras una confusa conferencia de prensa, miles de berlineses acudieron a los pasos fronterizos y los guardias terminaron abriéndolos.',
+impact:'El acontecimiento simbolizó el derrumbe de los regímenes comunistas de Europa oriental y condujo a la reunificación alemana en 1990.'
+},
+'Disolución de la URSS':{
+context:'La economía soviética estaba estancada y las reformas de Mijaíl Gorbachov abrieron espacios para nacionalismos y oposición política.',
+what:'Tras un fallido golpe de Estado en 1991, varias repúblicas declararon su independencia. En diciembre la Unión Soviética dejó formalmente de existir.',
+impact:'Terminó la Guerra Fría bipolar y surgieron quince estados independientes, incluida la Federación Rusa.'
+},
+'World Wide Web pública':{
+context:'Internet ya conectaba computadoras, pero navegar y compartir información seguía siendo difícil.',
+what:'Tim Berners-Lee desarrolló en CERN el sistema basado en HTML, HTTP y URL y en 1991 abrió el proyecto a usuarios externos.',
+impact:'La Web convirtió Internet en un medio accesible para publicar y enlazar información, transformando comunicación, comercio, medios y cultura.'
+},
+'Atentados del 11-S':{
+context:'Al Qaeda, organización yihadista liderada por Osama bin Laden, había declarado hostilidad contra Estados Unidos y realizado ataques previos.',
+what:'El 11 de septiembre de 2001, 19 secuestradores tomaron cuatro aviones. Dos impactaron las Torres Gemelas, uno el Pentágono y otro cayó en Pensilvania.',
+impact:'Murieron casi 3,000 personas. Estados Unidos inició la “guerra contra el terrorismo”, invadió Afganistán y expandió políticas de seguridad y vigilancia con consecuencias globales.'
+},
+'Crisis financiera global':{
+context:'Durante años crecieron crédito barato, hipotecas de alto riesgo y productos financieros complejos vinculados al mercado inmobiliario estadounidense.',
+what:'En 2008 la quiebra de Lehman Brothers aceleró una crisis bancaria internacional. Gobiernos y bancos centrales intervinieron para evitar un colapso mayor.',
+impact:'La recesión causó desempleo, pérdida de viviendas, rescates bancarios y fuerte desconfianza política. Sus consecuencias económicas y sociales se extendieron durante años.'
+},
+'Primavera Árabe':{
+context:'Diversos países árabes acumulaban desempleo, corrupción, autoritarismo y descontento social.',
+what:'Las protestas comenzaron en Túnez a finales de 2010 tras la inmolación de Mohamed Bouazizi y se extendieron a Egipto, Libia, Siria, Yemen y otros países.',
+impact:'Algunos gobiernos cayeron, pero los resultados fueron muy distintos: reformas limitadas, restauraciones autoritarias, guerras civiles y crisis regionales.'
+},
+'Acuerdo de París':{
+context:'Décadas de evidencia científica mostraban que las emisiones humanas de gases de efecto invernadero estaban calentando el planeta.',
+what:'En 2015 casi todos los países adoptaron un acuerdo para mantener el calentamiento global muy por debajo de 2 °C y esforzarse por limitarlo a 1.5 °C.',
+impact:'Creó un marco global de compromisos climáticos nacionales, aunque estos no garantizan por sí solos alcanzar las metas de temperatura.'
+},
+'Pandemia de COVID-19':{
+context:'A finales de 2019 se detectaron casos de una nueva enfermedad respiratoria en Wuhan, China, causada por el coronavirus SARS-CoV-2.',
+what:'El virus se propagó rápidamente por el mundo. En marzo de 2020 la OMS declaró una pandemia. Se aplicaron confinamientos, restricciones, pruebas, mascarillas y posteriormente campañas masivas de vacunación.',
+impact:'Murieron millones de personas y hubo importantes efectos sobre salud, educación, economía, trabajo y cadenas globales de suministro.'
+},
+'Invasión rusa de Ucrania':{
+context:'Las tensiones entre Rusia y Ucrania aumentaron tras la anexión rusa de Crimea en 2014 y la guerra en Donbás.',
+what:'El 24 de febrero de 2022 Rusia lanzó una invasión a gran escala desde varios frentes. Ucrania resistió con apoyo militar y económico de numerosos países occidentales.',
+impact:'La guerra provocó enormes pérdidas humanas, millones de desplazados, sanciones contra Rusia y una profunda reconfiguración de la seguridad europea.'
+},
+'IA generativa masiva':{
+context:'Los avances en aprendizaje profundo, modelos de lenguaje y capacidad computacional permitieron sistemas capaces de generar texto, imágenes, audio y código con gran calidad.',
+what:'Desde 2022 herramientas generativas accesibles al público se difundieron con enorme rapidez y comenzaron a integrarse en educación, empresas, programación y creación de contenidos.',
+impact:'La tecnología abrió oportunidades productivas y creativas, pero también debates sobre empleo, derechos de autor, desinformación, privacidad, sesgos y regulación.'
+}
+};
+
+const eraDetails={
+'Renacimiento':{
+history:'Se desarrolló aproximadamente entre los siglos XV y XVI, en paralelo al humanismo y al fortalecimiento de cortes e instituciones urbanas. La difusión de la imprenta musical ayudó a que repertorios y estilos circularan con mayor rapidez por Europa.',
+music:'Predomina la polifonía vocal: varias líneas melódicas independientes se entrelazan con relativa igualdad. Son frecuentes la imitación, los modos eclesiásticos y una sonoridad más consonante que la medieval.',
+forms:'Misas, motetes, madrigales, chansons y primeras tradiciones instrumentales impresas.',
+importance:'Sentó las bases del contrapunto occidental y de una escritura vocal extremadamente refinada. Hacia finales del periodo comenzó a surgir una nueva preocupación por expresar el texto con mayor dramatismo, lo que desembocaría en el Barroco.'
+},
+'Barroco':{
+history:'Abarca aproximadamente 1600–1750 y coincide con monarquías absolutas, expansión de cortes europeas y crecimiento de teatros públicos de ópera.',
+music:'Se consolida el sistema tonal mayor-menor, el bajo continuo y una clara jerarquía entre melodía y acompañamiento. El contraste, la ornamentación y el dramatismo son rasgos centrales.',
+forms:'Ópera, oratorio, cantata, fuga, suite, sonata, concerto grosso y concierto solista.',
+importance:'Estableció muchas de las bases armónicas y formales de la música occidental posterior y convirtió la música instrumental en un campo autónomo de enorme sofisticación.'
+},
+'Clasicismo':{
+history:'Se desarrolló aproximadamente entre 1750 y 1820, especialmente en Viena, y estuvo vinculado a ideales ilustrados de claridad, proporción y racionalidad.',
+music:'Texturas más transparentes, frases equilibradas, contraste temático y una organización armónica basada en relaciones tonales claramente articuladas.',
+forms:'Sinfonía, sonata, concierto, cuarteto de cuerda, divertimento y ópera clásica.',
+importance:'Consolidó estructuras que dominarían gran parte de la música de concierto occidental. Haydn, Mozart y Beethoven llevaron estas formas a una sofisticación extraordinaria.'
+},
+'Romanticismo':{
+history:'Se desarrolló durante gran parte del siglo XIX, en un contexto de industrialización, nacionalismos, expansión de la burguesía y creciente culto a la figura del artista individual.',
+music:'Aumenta el cromatismo, la libertad formal, la expresividad y el tamaño de la orquesta. La música busca sugerir emociones, paisajes, literatura e identidades nacionales.',
+forms:'Lied, poema sinfónico, concierto virtuoso, ópera romántica, sinfonía expandida y miniaturas para piano.',
+importance:'Redefinió al compositor como creador individual y convirtió la música en vehículo de identidad, subjetividad y narración.'
+},
+'Romanticismo tardío':{
+history:'A finales del siglo XIX, la tradición romántica alcanzó dimensiones monumentales mientras nuevas corrientes comenzaban a cuestionar sus límites.',
+music:'Cromatismo extremo, grandes orquestas, obras de larga duración y una tonalidad cada vez más inestable.',
+forms:'Grandes sinfonías, poemas sinfónicos, dramas musicales y ciclos de canciones.',
+importance:'Llevó el sistema tonal hasta un punto de enorme tensión. Mahler, Strauss y otros prepararon el terreno para las rupturas modernistas.'
+},
+'Modernismo':{
+history:'Durante las primeras décadas del siglo XX, guerras, urbanización, nuevas tecnologías y movimientos artísticos de vanguardia transformaron el panorama cultural.',
+music:'No existe un lenguaje único: aparecen atonalidad, dodecafonismo, ritmos irregulares, nuevas escalas, neoclasicismo, primitivismo y exploración tímbrica.',
+forms:'Ballet moderno, nuevas óperas, música de cámara experimental, obras atonales y primeras músicas electrónicas.',
+importance:'Rompió con la idea de que toda la música debía organizarse según las reglas tonales heredadas de los siglos anteriores.'
+},
+'Posguerra / Vanguardias':{
+history:'Después de 1945, Europa buscó reconstruirse mientras la Guerra Fría y el desarrollo tecnológico transformaban instituciones y cultura.',
+music:'Serialismo integral, música concreta, electrónica, azar, espacialización y técnicas instrumentales extendidas.',
+forms:'Obras electroacústicas, instalaciones, piezas indeterminadas y nuevas formas de concierto.',
+importance:'Amplió radicalmente el concepto de música y puso en discusión quién controla una obra, qué cuenta como sonido musical y cómo debe organizarse el tiempo.'
+},
+'Contemporánea':{
+history:'Desde aproximadamente 1970 no existe un estilo dominante. La globalización, grabación digital, internet y tecnologías de producción han multiplicado los lenguajes disponibles.',
+music:'Coexisten minimalismo, espectralismo, neotonalidad, electrónica, posmodernismo, experimentación y cruces con músicas populares.',
+forms:'Ópera contemporánea, instalaciones sonoras, música electrónica, obras multimedia y combinaciones híbridas.',
+importance:'La característica principal de la época es la pluralidad. Un compositor puede utilizar técnicas medievales, seriales, electrónicas y populares dentro de una misma obra.'
+}
+};
+
+function section(title,html){
+  return `<div class="pop-section"><div class="pop-section-title">${esc(title)}</div><div class="pop-section-text">${html}</div></div>`;
+}
+function buildExtra(type,title,name=null){
+  if(type==='Compositor'){
+    const d=composerDetails[name];
+    if(!d)return '';
+    return section('Historia',esc(d.bio))
+      +section('Obras emblemáticas',esc(d.works))
+      +section('Estilo',esc(d.style))
+      +section('Aporte a la música',esc(d.legacy));
+  }
+  if(type==='Suceso histórico'){
+    const d=eventDetails[title];
+    if(!d)return '';
+    return section('Contexto y causas',esc(d.context))
+      +section('Qué ocurrió',esc(d.what))
+      +section('Consecuencias e importancia',esc(d.impact));
+  }
+  if(type==='Era musical'){
+    const d=eraDetails[title];
+    if(!d)return '';
+    return section('Contexto histórico',esc(d.history))
+      +section('Cómo suena',esc(d.music))
+      +section('Formas y géneros',esc(d.forms))
+      +section('Importancia histórica',esc(d.importance));
+  }
+  return '';
+}
+
+function openInfo(el,type,title,dates,text,name=null){
+  if(selected)selected.classList.remove('selected');
+  clearActiveLinks();
+  selected=el;
+  el.classList.add('selected');
+  const associated=links.get(el)||[];
+  associated.forEach(n=>n.classList.add('active'));
+  activeLinks=associated;
+
+  pop.classList.add('open');
+  document.getElementById('popType').textContent=type;
+  document.getElementById('popTitle').textContent=title;
+  document.getElementById('popDates').textContent=dates;
+  document.getElementById('popText').textContent=text;
+  document.getElementById('popExtra').innerHTML=buildExtra(type,title,name);
+
+  const subtitle=document.getElementById('popSubtitle');
+  const wiki=document.getElementById('wikiLink');
+  const immortalBadge=document.getElementById('immortalBadge');
+  if(name){
+    subtitle.textContent=fullNames[name]||name;
+    wiki.href=wikipediaUrl(name);
+    wiki.hidden=false;
+    immortalBadge.innerHTML=IMMORTALS.has(name)?'<span class="immortal-badge">★ Inmortal · transformador histórico</span>':'';
+  }else{
+    subtitle.textContent='';
+    wiki.hidden=true;
+    wiki.removeAttribute('href');
+    immortalBadge.innerHTML='';
+  }
+  pos(el);
+}
+
+function bind(el,type,title,dates,text,name=null,associated=[]){
+  el.classList.add('item');
+  el.tabIndex=0;
+  el.setAttribute('role','button');
+  el.setAttribute('aria-label',title+', '+dates);
+  links.set(el,associated);
+  el.addEventListener('click',e=>{e.stopPropagation();openInfo(el,type,title,dates,text,name)});
+  el.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      openInfo(el,type,title,dates,text,name);
+    }
+  });
+}
+
+const layer=document.getElementById('composerLayer');
+pack(C,5,13).forEach(({data:c,lane})=>{
+  const[n,b,d,desc]=c,end=d??END;
+  const top=425-(lane+1)*29;
+  const barBottom=top+23;
+  const axisY=475;
+
+  const birthLine=document.createElement('div');
+  birthLine.className='life-connector';
+  birthLine.style.left=x(b)+'px';
+  birthLine.style.top=barBottom+'px';
+  birthLine.style.height=Math.max(0,axisY-barBottom)+'px';
+
+  const deathLine=document.createElement('div');
+  deathLine.className='life-connector';
+  deathLine.style.left=x(end)+'px';
+  deathLine.style.top=barBottom+'px';
+  deathLine.style.height=Math.max(0,axisY-barBottom)+'px';
+
+  const birthDot=document.createElement('div');
+  birthDot.className='life-anchor';
+  birthDot.style.left=x(b)+'px';
+  birthDot.style.top=axisY+'px';
+
+  const deathDot=document.createElement('div');
+  deathDot.className='life-anchor';
+  deathDot.style.left=x(end)+'px';
+  deathDot.style.top=axisY+'px';
+
+  const el=document.createElement('div');
+  el.className='composer';
+  el.style.left=x(b)+'px';
+  el.style.width=Math.max(38,x(end)-x(b))+'px';
+  el.style.top=top+'px';
+  el.textContent=n;
+  if(IMMORTALS.has(n))el.classList.add('immortal');
+
+  layer.append(birthLine,deathLine,birthDot,deathDot,el);
+  bind(el,'Compositor',n,d?`${b}–${d}`:`${b}–actualidad`,desc,n,[birthLine,deathLine,birthDot,deathDot]);
+});
+const eras=document.getElementById('eraLayer');ER.forEach(([n,a,b,d])=>{const el=document.createElement('div');el.className='era';el.style.left=x(a)+'px';el.style.width=x(b)-x(a)+'px';el.innerHTML=`<span>${esc(n)}<br><span style="font-weight:400;opacity:.72">${a}–${b}</span></span>`;bind(el,'Era musical',n,`${a}–${b}`,d);eras.appendChild(el)});
+const objs=EV.map(e=>({e,px:x(e[1])})).sort((a,b)=>a.px-b.px),last=[];
+objs.forEach(o=>{
+  let l=last.findIndex(v=>o.px-v>=142);
+  if(l<0){l=last.length;last.push(o.px)}else last[l]=o.px;
+  o.lane=l;
+});
+const evl=document.getElementById('eventLayer');
+objs.forEach(({e,px,lane})=>{
+  const[n,y,d]=e,top=555+lane*53;
+  const s=document.createElement('div');
+  const dot=document.createElement('div');
+  const lab=document.createElement('div');
+
+  s.className='event-stem';
+  s.style.left=px+'px';
+  s.style.top='529px';
+  s.style.height=top-529+'px';
+
+  dot.className='event-dot';
+  dot.style.left=px+'px';
+  dot.style.top='525px';
+
+  lab.className='event';
+  lab.style.left=px+'px';
+  lab.style.top=top+'px';
+  lab.innerHTML=`<strong>${y}</strong><br>${esc(n)}`;
+
+  evl.append(s,dot,lab);
+  bind(lab,'Suceso histórico',n,String(y),d,null,[s,dot]);
+});
+document.getElementById('popClose').addEventListener('click',()=>{pop.classList.remove('open');if(selected)selected.classList.remove('selected');clearActiveLinks();selected=null});window.addEventListener('resize',()=>{if(selected&&pop.classList.contains('open'))pos(selected)});const sc=document.getElementById('scroller'),go=y=>sc.scrollTo({left:Math.max(0,x(y)-sc.clientWidth*.35),behavior:'smooth'});goStart.onclick=()=>go(1450);go1800.onclick=()=>go(1800);go1900.onclick=()=>go(1900);goNow.onclick=()=>go(2026);if(matchMedia('(max-width:720px)').matches)go(1750);
+})();
+</script>
+</body>
+</html>
